@@ -5,13 +5,24 @@ import (
 	"time"
 )
 
+type Role struct {
+	gorm.Model
+	Name     string `gorm:"not null"`
+	StatusID int    `gorm:"type:smallint;default:1;check:status_id = 0 OR status_id = 1"`
+
+	Users []User `gorm:"foreignKey:RoleID"`
+}
+
 type User struct {
 	ID           int       `gorm:"primaryKey" json:"id"`
+	RoleID       int       `gorm:"column:role_id;not null" json:"role_id"`
 	Username     string    `gorm:"uniqueIndex;not null" json:"username"`
 	PasswordHash string    `gorm:"not null" json:"-"`
 	Name         string    `gorm:"not null" json:"name"`
 	CreatedAt    time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt    time.Time `gorm:"autoUpdateTime" json:"updated_at"`
+
+	Role Role `gorm:"foreignKey:RoleID"`
 }
 
 type ProfessionalComponent struct {
@@ -116,6 +127,7 @@ type TotalCourseSemester struct {
 
 func AutoMigrate(db *gorm.DB) {
 	err := db.AutoMigrate(
+		&Role{},
 		&User{},
 		&ProfessionalComponent{},
 		&Component{},

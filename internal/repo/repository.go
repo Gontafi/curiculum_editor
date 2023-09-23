@@ -1,7 +1,9 @@
 package repo
 
 import (
+	"context"
 	"educational_program_creator/internal/models"
+	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 )
 
@@ -11,31 +13,61 @@ type RepositoryInterface interface {
 	GetAllUsers() ([]models.User, error)
 	GetUserById(id int) (*models.User, error)
 	GetUserByUsername(username string) (*models.User, error)
-	GetAllComponents() ([]models.Component, error)
-	GetComponentByID(id int) (*models.Component, error)
-	CreateComponent(component *models.Component) error
-	UpdateComponent(component *models.Component) error
-	DeleteComponent(id int) error
-	GetAllCourses() ([]models.Course, error)
-	GetCourseByID(id int) (*models.Course, error)
-	CreateCourse(course *models.Course) error
-	UpdateCourse(course *models.Course) error
-	DeleteCourse(id int) error
-	GetAllCycles() ([]models.Cycle, error)
-	GetCycleByID(id int) (*models.Cycle, error)
-	CreateCycle(cycle *models.Cycle) error
-	UpdateCycle(cycle *models.Cycle) error
-	DeleteCycle(id int) error
-	GetAllDepartments() ([]models.Department, error)
-	GetDepartmentByID(id int) (*models.Department, error)
-	CreateDepartment(department *models.Department) error
-	UpdateDepartment(department *models.Department) error
-	DeleteDepartment(id int) error
-	GetAllModules() ([]models.Module, error)
-	GetModuleByID(id int) (*models.Module, error)
-	CreateModule(module *models.Module) error
-	UpdateModule(module *models.Module) error
-	DeleteModule(id int) error
+	GetAllComponents(ctx context.Context) ([]models.Component, error)
+	GetComponentByID(ctx context.Context, id int) (*models.Component, error)
+	getCachedComponents(ctx context.Context) ([]models.Component, error)
+	cacheComponents(ctx context.Context, components []models.Component) error
+	getCachedComponent(ctx context.Context, id int) (*models.Component, error)
+	cacheComponent(ctx context.Context, component *models.Component) error
+	CreateComponent(ctx context.Context, component *models.Component) error
+	UpdateComponent(ctx context.Context, component *models.Component) error
+	DeleteComponent(ctx context.Context, id int) error
+	clearCachedComponents(ctx context.Context)
+	clearCachedComponent(ctx context.Context, id int)
+	GetAllCourses(ctx context.Context) ([]models.Course, error)
+	GetCourseByID(ctx context.Context, id int) (*models.Course, error)
+	getCachedCourses(ctx context.Context) ([]models.Course, error)
+	cacheCourses(ctx context.Context, courses []models.Course) error
+	getCachedCourse(ctx context.Context, id int) (*models.Course, error)
+	cacheCourse(ctx context.Context, course *models.Course) error
+	CreateCourse(ctx context.Context, course *models.Course) error
+	UpdateCourse(ctx context.Context, course *models.Course) error
+	DeleteCourse(ctx context.Context, id int) error
+	clearCachedCourses(ctx context.Context)
+	clearCachedCourse(ctx context.Context, id int)
+	GetAllCycles(ctx context.Context) ([]models.Cycle, error)
+	GetCycleByID(ctx context.Context, id int) (*models.Cycle, error)
+	getCachedCycles(ctx context.Context) ([]models.Cycle, error)
+	cacheCycles(ctx context.Context, cycles []models.Cycle) error
+	getCachedCycle(ctx context.Context, id int) (*models.Cycle, error)
+	cacheCycle(ctx context.Context, cycle *models.Cycle) error
+	CreateCycle(ctx context.Context, cycle *models.Cycle) error
+	UpdateCycle(ctx context.Context, cycle *models.Cycle) error
+	DeleteCycle(ctx context.Context, id int) error
+	clearCachedCycles(ctx context.Context)
+	clearCachedCycle(ctx context.Context, id int)
+	GetAllDepartments(ctx context.Context) ([]models.Department, error)
+	GetDepartmentByID(ctx context.Context, id int) (*models.Department, error)
+	getCachedDepartments(ctx context.Context) ([]models.Department, error)
+	cacheDepartments(ctx context.Context, departments []models.Department) error
+	getCachedDepartment(ctx context.Context, id int) (*models.Department, error)
+	cacheDepartment(ctx context.Context, department *models.Department) error
+	CreateDepartment(ctx context.Context, department *models.Department) error
+	UpdateDepartment(ctx context.Context, department *models.Department) error
+	DeleteDepartment(ctx context.Context, id int) error
+	clearCachedDepartments(ctx context.Context)
+	clearCachedDepartment(ctx context.Context, id int)
+	GetAllModules(ctx context.Context) ([]models.Module, error)
+	GetModuleByID(ctx context.Context, id int) (*models.Module, error)
+	getCachedModules(ctx context.Context) ([]models.Module, error)
+	cacheModules(ctx context.Context, modules []models.Module) error
+	getCachedModule(ctx context.Context, id int) (*models.Module, error)
+	cacheModule(ctx context.Context, module *models.Module) error
+	CreateModule(ctx context.Context, module *models.Module) error
+	UpdateModule(ctx context.Context, module *models.Module) error
+	DeleteModule(ctx context.Context, id int) error
+	clearCachedModules(ctx context.Context)
+	clearCachedModule(ctx context.Context, id int)
 	GetAllProfessionalComponents() ([]models.ProfessionalComponent, error)
 	GetProfessionalComponentByID(id int) (*models.ProfessionalComponent, error)
 	CreateProfessionalComponent(profComponent *models.ProfessionalComponent) error
@@ -55,12 +87,19 @@ type RepositoryInterface interface {
 	CreateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) error
 	UpdateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) error
 	DeleteTotalLearningCourse(id int) error
+	AddRole(role models.Role) (int, error)
+	DeleteRole(id int) error
+	UpdateRole(role models.Role) error
+	AllRoles() ([]models.Role, error)
+	GetRoleByID(id int) (models.Role, error)
+	GetUserRole(userID int) (*models.Role, error)
 }
 
 type Repository struct {
 	db *gorm.DB
+	rd *redis.Client
 }
 
-func NewRepository(db *gorm.DB) RepositoryInterface {
-	return &Repository{db: db}
+func NewRepository(db *gorm.DB, rd *redis.Client) RepositoryInterface {
+	return &Repository{db: db, rd: rd}
 }
