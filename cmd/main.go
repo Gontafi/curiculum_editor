@@ -1,27 +1,31 @@
 package main
 
 import (
-	"database/sql"
-	"educational_program_creator/internal/models"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
+	"educational_program_creator/internal/app"
+	"educational_program_creator/internal/config"
 	"log"
 )
 
 func main() {
-	db, err := gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{})
+	cfg, err := config.NewConfig()
 	if err != nil {
-		log.Fatalln("Failed to open", err)
-		return
+		log.Fatalln(err)
 	}
-	models.AutoMigrate(db)
 
-	sqlDB, _ := db.DB()
-
-	defer func(sqlDB *sql.DB) {
-		err := sqlDB.Close()
-		if err != nil {
-
-		}
-	}(sqlDB)
+	app.NewServer(cfg)
+	//db, err := gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{})
+	//if err != nil {
+	//	log.Fatalln("Failed to open", err)
+	//	return
+	//}
+	//models.AutoMigrate(db)
+	//
+	//sqlDB, _ := db.DB()
+	//
+	//defer func(sqlDB *sql.DB) {
+	//	err := sqlDB.Close()
+	//	if err != nil {
+	//
+	//	}
+	//}(sqlDB)
 }

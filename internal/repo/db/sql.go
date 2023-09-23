@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func NewDB(cfg config.AppConfig) (*gorm.DB, error) {
+func NewDB(cfg *config.AppConfig) (*gorm.DB, error) {
 	db, err := gorm.Open(sqlite.Open("gorm.db"), &gorm.Config{})
 	if err != nil {
 		return nil, err

@@ -1,4 +1,4 @@
-package rest
+package restapi
 
 import services "educational_program_creator/internal/services"
 

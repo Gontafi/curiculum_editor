@@ -1,4 +1,4 @@
-package rest
+package restapi
 
 import (
 	"educational_program_creator/internal/models"

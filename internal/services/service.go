@@ -8,6 +8,6 @@ type Service struct {
 	repo repo.RepositoryInterface
 }
 
-func NewService(repo *repo.Repository) *Service {
+func NewService(repo repo.RepositoryInterface) *Service {
 	return &Service{repo: repo}
 }
