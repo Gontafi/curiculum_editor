@@ -93,5 +93,13 @@ func InitRoutes(h *handlers.Handler, app *fiber.App) {
 			users.Post("/", h.CRUD.AddUser)
 			users.Put("/:id", h.CRUD.UpdateUser)
 		}
+		prerequisite := rest.Group("/prerequisite")
+		{
+			prerequisite.Get("/", h.CRUD.GetAllCoursePrerequisites)
+			prerequisite.Get("/:id", h.CRUD.GetCoursePrerequisiteByID)
+			prerequisite.Post("/", h.CRUD.CreateCoursePrerequisite)
+			prerequisite.Put("/:id", h.CRUD.UpdateProfessionalComponent)
+			prerequisite.Delete("/:id", h.CRUD.DeleteCoursePrerequisite)
+		}
 	}
 }

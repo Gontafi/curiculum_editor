@@ -2,6 +2,9 @@ package services
 
 import "educational_program_creator/internal/models"
 
+func (s *Service) GetAllCoursePrerequisite() ([]models.CoursePrerequisite, error) {
+	return s.repo.GetAllCoursePrerequisite()
+}
 func (s *Service) CreateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) error {
 	return s.repo.CreateCoursePrerequisite(coursePrerequisite)
 }

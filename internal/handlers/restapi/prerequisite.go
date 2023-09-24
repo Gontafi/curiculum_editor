@@ -8,6 +8,15 @@ import (
 	"strconv"
 )
 
+func (h *CrudHandler) GetAllCoursePrerequisites(c *fiber.Ctx) error {
+	prerequisites, err := h.Service.GetAllCoursePrerequisite()
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve semesters"})
+	}
+	return c.Status(http.StatusOK).JSON(prerequisites)
+}
+
 func (h *CrudHandler) CreateCoursePrerequisite(c *fiber.Ctx) error {
 	var req models.CreateCoursePrerequisiteRequest
 	if err := c.BodyParser(&req); err != nil {

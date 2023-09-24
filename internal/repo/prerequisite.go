@@ -2,6 +2,15 @@ package repo
 
 import "educational_program_creator/internal/models"
 
+func (r *Repository) GetAllCoursePrerequisite() ([]models.CoursePrerequisite, error) {
+	var prerequisites []models.CoursePrerequisite
+	err := r.db.Find(&prerequisites).Error
+	if err != nil {
+		return nil, err
+	}
+	return prerequisites, nil
+}
+
 func (r *Repository) CreateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) error {
 	return r.db.Create(coursePrerequisite).Error
 }

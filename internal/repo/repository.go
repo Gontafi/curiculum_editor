@@ -97,6 +97,7 @@ type RepositoryInterface interface {
 	GetCoursePrerequisiteByID(id int) (*models.CoursePrerequisite, error)
 	UpdateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) error
 	DeleteCoursePrerequisite(id int) error
+	GetAllCoursePrerequisite() ([]models.CoursePrerequisite, error)
 }
 
 type Repository struct {
