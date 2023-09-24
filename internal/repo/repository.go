@@ -93,6 +93,10 @@ type RepositoryInterface interface {
 	AllRoles() ([]models.Role, error)
 	GetRoleByID(id int) (models.Role, error)
 	GetUserRole(userID int) (*models.Role, error)
+	CreateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) error
+	GetCoursePrerequisiteByID(id int) (*models.CoursePrerequisite, error)
+	UpdateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) error
+	DeleteCoursePrerequisite(id int) error
 }
 
 type Repository struct {

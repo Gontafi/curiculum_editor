@@ -103,10 +103,22 @@ type Course struct {
 	Module                Module                `gorm:"foreignKey:ModuleID"`
 	Department            Department            `gorm:"foreignKey:DepartmentID"`
 	ProfessionalComponent ProfessionalComponent `gorm:"foreignKey:ProfessionalComponentID"`
+	Prerequisites         []CoursePrerequisite  `gorm:"foreignKey:CourseID"`
+}
+
+type CoursePrerequisite struct {
+	ID             int `gorm:"primaryKey" json:"id"`
+	CourseID       int `gorm:"column:course_id;not null" json:"course_id"`
+	PrerequisiteID int `gorm:"column:prerequisite_id;not null" json:"prerequisite_id"`
+
+	Course       Course `gorm:"foreignKey:CourseID"`
+	Prerequisite Course `gorm:"foreignKey:PrerequisiteID"`
 }
 
 type TotalLearningCourse struct {
 	ID int `gorm:"primaryKey" json:"id"`
+
+	Courses []CoursePrerequisite `gorm:"foreignKey:TotalLearningCourseID"`
 }
 
 type Semester struct {
@@ -135,6 +147,7 @@ func AutoMigrate(db *gorm.DB) {
 		&Cycle{},
 		&Department{},
 		&Course{},
+		&CoursePrerequisite{},
 		&TotalLearningCourse{},
 		&Semester{},
 		&TotalCourseSemester{},

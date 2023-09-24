@@ -27,7 +27,8 @@ func NewServer(cfg *config.AppConfig) {
 		api.NewUserHandler(service),
 		middleware.NewMiddleware(service),
 	)
-	app := fiber.New(fiber.Config{})
+	app := fiber.New()
 	routes.InitRoutes(handler, app)
 
+	log.Fatal(app.Listen(":3000"))
 }

@@ -156,3 +156,13 @@ type UpdateTotalCourseSemesterRequest struct {
 	TotalLearningCourseID int `json:"total_learning_course_id"`
 	SemesterID            int `json:"semester_id"`
 }
+
+type CreateCoursePrerequisiteRequest struct {
+	CourseID       int `json:"course_id" binding:"required"`
+	PrerequisiteID int `json:"prerequisite_id" binding:"required"`
+}
+
+type UpdateCoursePrerequisiteRequest struct {
+	CourseID       int `json:"course_id"`
+	PrerequisiteID int `json:"prerequisite_id"`
+}
