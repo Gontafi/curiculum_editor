@@ -35,6 +35,9 @@
             <v-row v-if="currentTab.name === 'ProfessionalComponent'"> <!-- Add similar blocks for other models -->
                 <ComponentComponent></ComponentComponent>
             </v-row>
+            <v-row v-if="currentTab.name === 'Module'"> <!-- Add similar blocks for other models -->
+                <ModuleComponent></ModuleComponent>
+            </v-row>
           </v-container>
         </v-main>
         <v-dialog v-model="logoutDialog" max-width="400">
@@ -55,12 +58,14 @@
 <!-- eslint-disable -->
 <script>
 import ComponentComponent from "@/components/ComponentComponent.vue"
+import ModuleComponent from "@/components/ModuleComponent.vue";
 
   export default {
     name: "DashboardView",
     components: {
-        ComponentComponent,
-    },
+    ComponentComponent,
+    ModuleComponent
+},
     data() {
       return {
         items: [

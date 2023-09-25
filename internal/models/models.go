@@ -34,7 +34,7 @@ type ProfessionalComponent struct {
 	DescriptionRu string      `gorm:"column:description_ru;not null" json:"description_ru"`
 	DescriptionEn string      `gorm:"column:description_en;not null" json:"description_en"`
 	Order         int         `gorm:"column:order;not null" json:"order"`
-	Components    []Component `gorm:"foreignKey:ProfID"`
+	Components    []Component `gorm:"foreignKey:ProfID" json:"-"`
 }
 
 type Component struct {

@@ -18,7 +18,7 @@ type CreateProfessionalComponentRequest struct {
 	DescriptionKz string `json:"description_kz" binding:"required"`
 	DescriptionRu string `json:"description_ru" binding:"required"`
 	DescriptionEn string `json:"description_en" binding:"required"`
-	Order         int    `json:"order" binding:"required"`
+	Order         int    `json:"order,string" binding:"required"`
 }
 
 type UpdateProfessionalComponentRequest struct {
@@ -28,7 +28,7 @@ type UpdateProfessionalComponentRequest struct {
 	DescriptionKz string `json:"description_kz"`
 	DescriptionRu string `json:"description_ru"`
 	DescriptionEn string `json:"description_en"`
-	Order         int    `json:"order"`
+	Order         int    `json:"order,string"`
 }
 
 type CreateComponentRequest struct {
@@ -39,7 +39,7 @@ type CreateComponentRequest struct {
 	DescriptionKz string `json:"description_kz" binding:"required"`
 	DescriptionRu string `json:"description_ru" binding:"required"`
 	DescriptionEn string `json:"description_en" binding:"required"`
-	Order         int    `json:"order" binding:"required"`
+	Order         int    `json:"order,string" binding:"required"`
 }
 
 type UpdateComponentRequest struct {
@@ -50,7 +50,7 @@ type UpdateComponentRequest struct {
 	DescriptionKz string `json:"description_kz"`
 	DescriptionRu string `json:"description_ru"`
 	DescriptionEn string `json:"description_en"`
-	Order         int    `json:"order"`
+	Order         int    `json:"order,string"`
 }
 
 type CreateModuleRequest struct {
@@ -68,14 +68,14 @@ type UpdateModuleRequest struct {
 }
 
 type CreateCycleRequest struct {
-	ModuleID int    `json:"module_id" binding:"required"`
+	ModuleID int    `json:"module_id,string" binding:"required"`
 	CodeKz   string `json:"code_kz" binding:"required"`
 	CodeRu   string `json:"code_ru" binding:"required"`
 	CodeEn   string `json:"code_en" binding:"required"`
 }
 
 type UpdateCycleRequest struct {
-	ModuleID int    `json:"module_id"`
+	ModuleID int    `json:"module_id,string"`
 	CodeKz   string `json:"code_kz"`
 	CodeRu   string `json:"code_ru"`
 	CodeEn   string `json:"code_en"`
@@ -97,10 +97,10 @@ type CreateCourseRequest struct {
 	CodeKz                  string `json:"code_kz" binding:"required"`
 	CodeRu                  string `json:"code_ru" binding:"required"`
 	CodeEn                  string `json:"code_en" binding:"required"`
-	ECTS                    int    `json:"ects" binding:"required"`
-	ModuleID                int    `json:"module_id" binding:"required"`
-	DepartmentID            int    `json:"department_id" binding:"required"`
-	ProfessionalComponentID int    `json:"professional_component_id" binding:"required"`
+	ECTS                    int    `json:"ects,string" binding:"required"`
+	ModuleID                int    `json:"module_id,string" binding:"required"`
+	DepartmentID            int    `json:"department_id,string" binding:"required"`
+	ProfessionalComponentID int    `json:"professional_component_id,string" binding:"required"`
 	NameKz                  string `json:"name_kz" binding:"required"`
 	NameRu                  string `json:"name_ru" binding:"required"`
 	NameEn                  string `json:"name_en" binding:"required"`
@@ -110,20 +110,20 @@ type CreateCourseRequest struct {
 	ControlFormKz           string `json:"control_form_kz" binding:"required"`
 	ControlFormRu           string `json:"control_form_ru" binding:"required"`
 	ControlFormEn           string `json:"control_form_en" binding:"required"`
-	LectureHour             int    `json:"lecture_hour" binding:"required"`
-	SeminarHour             int    `json:"seminar_hour" binding:"required"`
-	LabHour                 int    `json:"lab_hour" binding:"required"`
-	SROHour                 int    `json:"sro_hour" binding:"required"`
+	LectureHour             int    `json:"lecture_hour,string" binding:"required"`
+	SeminarHour             int    `json:"seminar_hour,string" binding:"required"`
+	LabHour                 int    `json:"lab_hour,string" binding:"required"`
+	SROHour                 int    `json:"sro_hour,string" binding:"required"`
 }
 
 type UpdateCourseRequest struct {
 	CodeKz                  string `json:"code_kz"`
 	CodeRu                  string `json:"code_ru"`
 	CodeEn                  string `json:"code_en"`
-	ECTS                    int    `json:"ects"`
-	ModuleID                int    `json:"module_id"`
-	DepartmentID            int    `json:"department_id"`
-	ProfessionalComponentID int    `json:"professional_component_id"`
+	ECTS                    int    `json:"ects,string"`
+	ModuleID                int    `json:"module_id,string"`
+	DepartmentID            int    `json:"department_id,string"`
+	ProfessionalComponentID int    `json:"professional_component_id,string"`
 	NameKz                  string `json:"name_kz"`
 	NameRu                  string `json:"name_ru"`
 	NameEn                  string `json:"name_en"`
@@ -133,39 +133,39 @@ type UpdateCourseRequest struct {
 	ControlFormKz           string `json:"control_form_kz"`
 	ControlFormRu           string `json:"control_form_ru"`
 	ControlFormEn           string `json:"control_form_en"`
-	LectureHour             int    `json:"lecture_hour"`
-	SeminarHour             int    `json:"seminar_hour"`
-	LabHour                 int    `json:"lab_hour"`
-	SROHour                 int    `json:"sro_hour"`
+	LectureHour             int    `json:"lecture_hour,string"`
+	SeminarHour             int    `json:"seminar_hour,string"`
+	LabHour                 int    `json:"lab_hour,string"`
+	SROHour                 int    `json:"sro_hour,string"`
 }
 
 type CreateSemesterCourse struct {
-	CourseID   int `json:"course_id"`
-	SemesterID int `json:"semester_id"`
+	CourseID   int `json:"course_id,string"`
+	SemesterID int `json:"semester_id,string"`
 }
 
 type UpdateSemesterCourse struct {
-	ID         int `json:"id"`
-	CourseID   int `json:"course_id"`
-	SemesterID int `json:"semester_id"`
+	ID         int `json:"id,string"`
+	CourseID   int `json:"course_id,string"`
+	SemesterID int `json:"semester_id,string"`
 }
 
 type CreateTotalCourseSemesterRequest struct {
-	TotalLearningCourseID int `json:"total_learning_course_id" binding:"required"`
-	SemesterID            int `json:"semester_id" binding:"required"`
+	TotalLearningCourseID int `json:"total_learning_course_id,string" binding:"required"`
+	SemesterID            int `json:"semester_id,string" binding:"required"`
 }
 
 type UpdateTotalCourseSemesterRequest struct {
-	TotalLearningCourseID int `json:"total_learning_course_id"`
-	SemesterID            int `json:"semester_id"`
+	TotalLearningCourseID int `json:"total_learning_course_id,string"`
+	SemesterID            int `json:"semester_id,string"`
 }
 
 type CreateCoursePrerequisiteRequest struct {
-	CourseID       int `json:"course_id" binding:"required"`
-	PrerequisiteID int `json:"prerequisite_id" binding:"required"`
+	CourseID       int `json:"course_id,string" binding:"required"`
+	PrerequisiteID int `json:"prerequisite_id,string" binding:"required"`
 }
 
 type UpdateCoursePrerequisiteRequest struct {
-	CourseID       int `json:"course_id"`
-	PrerequisiteID int `json:"prerequisite_id"`
+	CourseID       int `json:"course_id,string"`
+	PrerequisiteID int `json:"prerequisite_id,string"`
 }

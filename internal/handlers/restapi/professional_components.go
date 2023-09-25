@@ -43,7 +43,7 @@ func (h *CrudHandler) CreateProfessionalComponent(c *fiber.Ctx) error {
 		log.Println(err)
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
-
+	log.Println(req)
 	component := models.ProfessionalComponent{
 		CodeKz:        req.CodeKz,
 		CodeRu:        req.CodeRu,

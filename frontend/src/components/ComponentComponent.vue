@@ -6,6 +6,7 @@
         <table>
           <thead>
             <tr>
+              <th>ID</th>
               <th>Code KZ</th>
               <th>Code RU</th>
               <th>Code EN</th>
@@ -19,47 +20,51 @@
           <tbody>
             <tr v-for="(component, index) in filteredComponents" :key="component.id">
               <td>
-                <span v-if="!component.editing">{{ component.codeKz }}</span>
-                <input v-else v-model="component.editedCodeKz" />
+                <span>{{ component.id }}</span>
               </td>
               <td>
-                <span v-if="!component.editing">{{ component.codeRu }}</span>
-                <input v-else v-model="component.editedCodeRu" />
+                <span v-if="!component.editing">{{ component.code_kz }}</span>
+                <input v-else v-model="editedComponent.code_kz" />
               </td>
               <td>
-                <span v-if="!component.editing">{{ component.codeEn }}</span>
-                <input v-else v-model="component.editedCodeEn" />
+                <span v-if="!component.editing">{{ component.code_ru }}</span>
+                <input v-else v-model="editedComponent.code_ru" />
               </td>
               <td>
-                <span v-if="!component.editing">{{ component.descriptionKz }}</span>
-                <input v-else v-model="component.editedDescriptionKz" />
+                <span v-if="!component.editing">{{ component.code_en }}</span>
+                <input v-else v-model="editedComponent.code_en" />
               </td>
               <td>
-                <span v-if="!component.editing">{{ component.descriptionRu }}</span>
-                <input v-else v-model="component.editedDescriptionRu" />
+                <span v-if="!component.editing">{{ component.description_kz }}</span>
+                <input v-else v-model="editedComponent.description_kz" />
               </td>
               <td>
-                <span v-if="!component.editing">{{ component.descriptionEn }}</span>
-                <input v-else v-model="component.editedDescriptionEn" />
+                <span v-if="!component.editing">{{ component.description_ru }}</span>
+                <input v-else v-model="editedComponent.description_ru" />
+              </td>
+              <td>
+                <span v-if="!component.editing">{{ component.description_en }}</span>
+                <input v-else v-model="editedComponent.description_en" />
               </td>
               <td>
                 <span v-if="!component.editing">{{ component.order }}</span>
-                <input v-else v-model="component.editedOrder" />
+                <input v-else v-model="editedComponent.order" />
               </td>
               <td>
                 <button @click="editComponent(component)" v-if="!component.editing">Edit</button>
-                <button @click="saveEditedComponent(component)" v-if="component.editing">Submit</button>
+                <button @click="saveEditedComponent(editedComponent)" v-if="component.editing">Submit</button>
                 <button @click="cancelEdit(component)" v-if="component.editing">Cancel</button>
                 <button @click="deleteComponent(component)" v-if="!component.editing">Delete</button>
               </td>
             </tr>
             <tr>
-              <td><input v-model="newComponent.codeKz" /></td>
-              <td><input v-model="newComponent.codeRu" /></td>
-              <td><input v-model="newComponent.codeEn" /></td>
-              <td><input v-model="newComponent.descriptionKz" /></td>
-              <td><input v-model="newComponent.descriptionRu" /></td>
-              <td><input v-model="newComponent.descriptionEn" /></td>
+              <td></td>
+              <td><input v-model="newComponent.code_kz" /></td>
+              <td><input v-model="newComponent.code_ru" /></td>
+              <td><input v-model="newComponent.code_en" /></td>
+              <td><input v-model="newComponent.description_kz" /></td>
+              <td><input v-model="newComponent.description_ru" /></td>
+              <td><input v-model="newComponent.description_en" /></td>
               <td><input v-model="newComponent.order" /></td>
               <td>
                 <button @click="addNewComponent">Add</button>
@@ -70,7 +75,7 @@
       </div>
       <div class="pagination">
         <button @click="prevPage" :disabled="pagination.page === 1">Previous</button>
-        <span>Page {{ pagination.page }} of {{ totalPages }}</span>
+        <span>Page {{ pagination.page }} of {{ totalPages() }}</span>
         <button @click="nextPage" :disabled="pagination.page === totalPages">Next</button>
       </div>
     </div>
@@ -78,24 +83,31 @@
 <!-- eslint-disable -->
   <script>
   import { mapState, mapActions, mapGetters } from 'vuex';
-  
   export default {
     name: "ComponentComponent",
     computed: {
-      ...mapState(['components', 'filteredComponents', 'newComponent', "pagination"]),
+      ...mapState(['filteredComponents', 'newComponent', "pagination", "editedComponent"]),
     },
     created() {
       this.fetchComponents();
     },
     methods: {
-      ...mapActions(['fetchComponents', 'addNewComponent', 'deleteComponent']),
+      ...mapActions(['fetchComponents', 'addNewComponent', 'deleteComponent', 'updateComponent']),
       ...mapGetters(['totalPages']),
       editComponent(component) {
         component.editing = true;
+        this.editedComponent.id = String(component.id);
+        this.editedComponent.code_en = component.code_en;
+        this.editedComponent.code_kz = component.code_kz;
+        this.editedComponent.code_ru = component.code_ru;
+        this.editedComponent.description_en = component.description_en;
+        this.editedComponent.description_kz = component.description_kz;
+        this.editedComponent.description_ru = component.description_ru;
+        this.editedComponent.order = String(component.order);
       },
       saveEditedComponent(component) {
-        // Make an API request to update the component here
-        // After successfully updating, set component.editing = false;
+        this.updateComponent(component);
+        this.cancelEdit(component);
       },
       cancelEdit(component) {
         component.editing = false;

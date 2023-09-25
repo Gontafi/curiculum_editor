@@ -11,5 +11,5 @@ const vuetify = createVuetify({
   components,
   directives,
 });
-
+// eslint-disable-next-line
 createApp(App).use(store).use(router).use(vuetify).mount("#app");
