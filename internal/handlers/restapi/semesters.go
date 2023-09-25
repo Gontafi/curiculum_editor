@@ -51,15 +51,16 @@ func (h *CrudHandler) GetSemesterByID(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(semester)
 }
 
-func (h *CrudHandler) CreateSemester(c *fiber.Ctx) error {
-	var req models.CreateSemesterRequest
+func (h *CrudHandler) CreateSemesterCourse(c *fiber.Ctx) error {
+	var req models.CreateSemesterCourse
 	if err := c.BodyParser(&req); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	semester := models.Semester{
-		CourseID: req.CourseID,
+	semester := models.SemesterCourse{
+		CourseID:   req.CourseID,
+		SemesterID: req.SemesterID,
 	}
 
 	if err := h.Service.CreateSemester(&semester); err != nil {
@@ -77,15 +78,16 @@ func (h *CrudHandler) UpdateSemester(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	var req models.UpdateSemesterRequest
+	var req models.UpdateSemesterCourse
 	if err := c.BodyParser(&req); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	semester := models.Semester{
-		ID:       id,
-		CourseID: req.CourseID,
+	semester := models.SemesterCourse{
+		ID:         id,
+		CourseID:   req.CourseID,
+		SemesterID: req.SemesterID,
 	}
 
 	if err := h.Service.UpdateSemester(&semester); err != nil {

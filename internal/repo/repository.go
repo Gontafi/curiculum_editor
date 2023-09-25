@@ -82,10 +82,10 @@ type RepositoryInterface interface {
 	GetCoursePrerequisiteByID(id int) (*models.CoursePrerequisite, error)
 	UpdateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) error
 	DeleteCoursePrerequisite(id int) error
-	GetAllSemesters(limit int, offset int) ([]models.Semester, error)
-	GetSemesterByID(id int) (*models.Semester, error)
-	CreateSemester(semester *models.Semester) error
-	UpdateSemester(semester *models.Semester) error
+	GetAllSemesters(limit int, offset int) ([]models.SemesterCourse, error)
+	GetSemesterByID(id int) (*models.SemesterCourse, error)
+	CreateSemester(semester *models.SemesterCourse) error
+	UpdateSemester(semester *models.SemesterCourse) error
 	DeleteSemester(id int) error
 	GetAllModules(ctx context.Context, limit int, offset int) ([]models.Module, error)
 	GetModuleByID(ctx context.Context, id int) (*models.Module, error)

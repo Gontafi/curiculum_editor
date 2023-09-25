@@ -5,7 +5,7 @@ import (
 	"educational_program_creator/pkg/utils"
 )
 
-func (s *Service) GetAllSemesters(page int, perPage int) ([]models.Semester, error) {
+func (s *Service) GetAllSemesters(page int, perPage int) ([]models.SemesterCourse, error) {
 	limit, offset := utils.CalculateLimitOffset(page, perPage)
 	semesters, err := s.repo.GetAllSemesters(limit, offset)
 	if err != nil {
@@ -14,7 +14,7 @@ func (s *Service) GetAllSemesters(page int, perPage int) ([]models.Semester, err
 	return semesters, nil
 }
 
-func (s *Service) GetSemesterByID(id int) (*models.Semester, error) {
+func (s *Service) GetSemesterByID(id int) (*models.SemesterCourse, error) {
 	semester, err := s.repo.GetSemesterByID(id)
 	if err != nil {
 		return nil, err
@@ -22,11 +22,11 @@ func (s *Service) GetSemesterByID(id int) (*models.Semester, error) {
 	return semester, nil
 }
 
-func (s *Service) CreateSemester(semester *models.Semester) error {
+func (s *Service) CreateSemester(semester *models.SemesterCourse) error {
 	return s.repo.CreateSemester(semester)
 }
 
-func (s *Service) UpdateSemester(semester *models.Semester) error {
+func (s *Service) UpdateSemester(semester *models.SemesterCourse) error {
 	return s.repo.UpdateSemester(semester)
 }
 

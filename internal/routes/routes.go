@@ -67,7 +67,7 @@ func InitRoutes(h *handlers.Handler, app *fiber.App) {
 		{
 			semesters.Get("/", h.CRUD.GetAllSemesters)
 			semesters.Get("/:id", h.CRUD.GetSemesterByID)
-			semesters.Post("/", h.CRUD.CreateSemester)
+			semesters.Post("/", h.CRUD.CreateSemesterCourse)
 			semesters.Put("/:id", h.CRUD.UpdateSemester)
 			semesters.Delete("/:id", h.CRUD.DeleteSemester)
 		}

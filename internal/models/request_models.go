@@ -139,12 +139,15 @@ type UpdateCourseRequest struct {
 	SROHour                 int    `json:"sro_hour"`
 }
 
-type CreateSemesterRequest struct {
-	CourseID int `json:"course_id" binding:"required"`
+type CreateSemesterCourse struct {
+	CourseID   int `json:"course_id"`
+	SemesterID int `json:"semester_id"`
 }
 
-type UpdateSemesterRequest struct {
-	CourseID int `json:"course_id"`
+type UpdateSemesterCourse struct {
+	ID         int `json:"id"`
+	CourseID   int `json:"course_id"`
+	SemesterID int `json:"semester_id"`
 }
 
 type CreateTotalCourseSemesterRequest struct {
