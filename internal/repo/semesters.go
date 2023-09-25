@@ -2,9 +2,9 @@ package repo
 
 import "educational_program_creator/internal/models"
 
-func (r *Repository) GetAllSemesters() ([]models.Semester, error) {
+func (r *Repository) GetAllSemesters(limit int, offset int) ([]models.Semester, error) {
 	var semesters []models.Semester
-	err := r.db.Find(&semesters).Error
+	err := r.db.Find(&semesters).Limit(limit).Offset(offset).Error
 	if err != nil {
 		return nil, err
 	}

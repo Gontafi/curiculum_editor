@@ -8,14 +8,14 @@ import (
 	"time"
 )
 
-func (r *Repository) GetAllCourses(ctx context.Context) ([]models.Course, error) {
+func (r *Repository) GetAllCourses(ctx context.Context, limit int, offset int) ([]models.Course, error) {
 	courses, err := r.getCachedCourses(ctx)
 	if err == nil && len(courses) > 0 {
 		return courses, nil
 	}
 
 	var coursesFromDB []models.Course
-	err = r.db.Find(&coursesFromDB).Error
+	err = r.db.Find(&coursesFromDB).Limit(limit).Offset(offset).Error
 	if err != nil {
 		return nil, err
 	}

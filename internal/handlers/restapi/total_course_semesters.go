@@ -9,7 +9,21 @@ import (
 )
 
 func (h *CrudHandler) GetAllTotalCourseSemesters(c *fiber.Ctx) error {
-	totalCourseSemesters, err := h.Service.GetAllTotalCourseSemesters()
+	pageParam := c.Params("page")
+	perPageParam := c.Params("perPage")
+
+	page, err := strconv.Atoi(pageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+	perPage, err := strconv.Atoi(perPageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+
+	totalCourseSemesters, err := h.Service.GetAllTotalCourseSemesters(page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve total course semesters"})

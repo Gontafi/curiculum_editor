@@ -8,14 +8,14 @@ import (
 	"time"
 )
 
-func (r *Repository) GetAllModules(ctx context.Context) ([]models.Module, error) {
+func (r *Repository) GetAllModules(ctx context.Context, limit int, offset int) ([]models.Module, error) {
 	modules, err := r.getCachedModules(ctx)
 	if err == nil && len(modules) > 0 {
 		return modules, nil
 	}
 
 	var modulesFromDB []models.Module
-	err = r.db.Find(&modulesFromDB).Error
+	err = r.db.Find(&modulesFromDB).Limit(limit).Offset(offset).Error
 	if err != nil {
 		return nil, err
 	}

@@ -9,7 +9,21 @@ import (
 )
 
 func (h *CrudHandler) GetAllComponents(c *fiber.Ctx) error {
-	components, err := h.Service.GetAllComponents(c.Context())
+	pageParam := c.Params("page")
+	perPageParam := c.Params("perPage")
+
+	page, err := strconv.Atoi(pageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+	perPage, err := strconv.Atoi(perPageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+
+	components, err := h.Service.GetAllComponents(c.Context(), page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve components"})

@@ -8,14 +8,14 @@ import (
 	"time"
 )
 
-func (r *Repository) GetAllDepartments(ctx context.Context) ([]models.Department, error) {
+func (r *Repository) GetAllDepartments(ctx context.Context, limit int, offset int) ([]models.Department, error) {
 	departments, err := r.getCachedDepartments(ctx)
 	if err == nil && len(departments) > 0 {
 		return departments, nil
 	}
 
 	var departmentsFromDB []models.Department
-	err = r.db.Find(&departmentsFromDB).Error
+	err = r.db.Find(&departmentsFromDB).Limit(limit).Offset(offset).Error
 	if err != nil {
 		return nil, err
 	}

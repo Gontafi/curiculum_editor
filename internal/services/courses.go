@@ -3,10 +3,12 @@ package services
 import (
 	"context"
 	"educational_program_creator/internal/models"
+	"educational_program_creator/pkg/utils"
 )
 
-func (s *Service) GetAllCourses(ctx context.Context) ([]models.Course, error) {
-	courses, err := s.repo.GetAllCourses(ctx)
+func (s *Service) GetAllCourses(ctx context.Context, page int, perPage int) ([]models.Course, error) {
+	limit, offset := utils.CalculateLimitOffset(page, perPage)
+	courses, err := s.repo.GetAllCourses(ctx, limit, offset)
 	if err != nil {
 		return nil, err
 	}

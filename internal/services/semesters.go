@@ -1,9 +1,13 @@
 package services
 
-import "educational_program_creator/internal/models"
+import (
+	"educational_program_creator/internal/models"
+	"educational_program_creator/pkg/utils"
+)
 
-func (s *Service) GetAllSemesters() ([]models.Semester, error) {
-	semesters, err := s.repo.GetAllSemesters()
+func (s *Service) GetAllSemesters(page int, perPage int) ([]models.Semester, error) {
+	limit, offset := utils.CalculateLimitOffset(page, perPage)
+	semesters, err := s.repo.GetAllSemesters(limit, offset)
 	if err != nil {
 		return nil, err
 	}

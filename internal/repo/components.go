@@ -8,14 +8,14 @@ import (
 	"time"
 )
 
-func (r *Repository) GetAllComponents(ctx context.Context) ([]models.Component, error) {
+func (r *Repository) GetAllComponents(ctx context.Context, limit int, offset int) ([]models.Component, error) {
 	components, err := r.getCachedComponents(ctx)
 	if err == nil && len(components) > 0 {
 		return components, nil
 	}
 
 	var componentsFromDB []models.Component
-	err = r.db.Find(&componentsFromDB).Error
+	err = r.db.Find(&componentsFromDB).Limit(limit).Offset(offset).Error
 	if err != nil {
 		return nil, err
 	}

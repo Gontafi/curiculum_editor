@@ -1,6 +1,6 @@
 package restapi
 
-import services "educational_program_creator/internal/services"
+import "educational_program_creator/internal/services"
 
 type CrudHandler struct {
 	Service *services.Service

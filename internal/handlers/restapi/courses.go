@@ -9,7 +9,21 @@ import (
 )
 
 func (h *CrudHandler) GetAllCourses(c *fiber.Ctx) error {
-	courses, err := h.Service.GetAllCourses(c.Context())
+	pageParam := c.Params("page")
+	perPageParam := c.Params("perPage")
+
+	page, err := strconv.Atoi(pageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+	perPage, err := strconv.Atoi(perPageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+
+	courses, err := h.Service.GetAllCourses(c.Context(), page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve courses"})

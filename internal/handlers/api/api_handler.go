@@ -1,6 +1,6 @@
 package api
 
-import services "educational_program_creator/internal/services"
+import "educational_program_creator/internal/services"
 
 type UserHandler struct {
 	Service *services.Service

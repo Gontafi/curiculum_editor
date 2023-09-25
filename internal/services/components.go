@@ -3,11 +3,13 @@ package services
 import (
 	"context"
 	"educational_program_creator/internal/models"
+	"educational_program_creator/pkg/utils"
 	"errors"
 )
 
-func (s *Service) GetAllComponents(ctx context.Context) ([]models.Component, error) {
-	return s.repo.GetAllComponents(ctx)
+func (s *Service) GetAllComponents(ctx context.Context, page int, perPage int) ([]models.Component, error) {
+	limit, offset := utils.CalculateLimitOffset(page, perPage)
+	return s.repo.GetAllComponents(ctx, limit, offset)
 }
 
 func (s *Service) GetComponentByID(ctx context.Context, id int) (*models.Component, error) {

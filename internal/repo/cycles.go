@@ -8,14 +8,14 @@ import (
 	"time"
 )
 
-func (r *Repository) GetAllCycles(ctx context.Context) ([]models.Cycle, error) {
+func (r *Repository) GetAllCycles(ctx context.Context, limit int, offset int) ([]models.Cycle, error) {
 	cycles, err := r.getCachedCycles(ctx)
 	if err == nil && len(cycles) > 0 {
 		return cycles, nil
 	}
 
 	var cyclesFromDB []models.Cycle
-	err = r.db.Find(&cyclesFromDB).Error
+	err = r.db.Find(&cyclesFromDB).Limit(limit).Offset(offset).Error
 	if err != nil {
 		return nil, err
 	}
