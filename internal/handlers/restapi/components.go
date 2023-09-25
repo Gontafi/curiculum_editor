@@ -9,8 +9,8 @@ import (
 )
 
 func (h *CrudHandler) GetAllComponents(c *fiber.Ctx) error {
-	pageParam := c.Params("page")
-	perPageParam := c.Params("perPage")
+	pageParam := c.Query("page", "1")
+	perPageParam := c.Query("perPage", "10")
 
 	page, err := strconv.Atoi(pageParam)
 	if err != nil {
