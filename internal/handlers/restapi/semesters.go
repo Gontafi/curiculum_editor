@@ -57,7 +57,7 @@ func (h *CrudHandler) CreateSemesterCourse(c *fiber.Ctx) error {
 		log.Println(err)
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
-
+	//log help
 	semester := models.SemesterCourse{
 		CourseID:   req.CourseID,
 		SemesterID: req.SemesterID,
