@@ -117,15 +117,18 @@ type CoursePrerequisite struct {
 
 type TotalLearningCourse struct {
 	ID int `gorm:"primaryKey" json:"id"`
-
-	Courses []CoursePrerequisite `gorm:"foreignKey:TotalLearningCourseID"`
 }
 
-type Semester struct {
-	ID       int `gorm:"primaryKey" json:"id"`
-	CourseID int `gorm:"column:course_id;not null" json:"course_id"`
+type SemesterCourse struct {
+	ID         int `gorm:"primaryKey" json:"id"`
+	SemesterID int `gorm:"column:semester_id;not null" json:"semester_id"`
+	CourseID   int `gorm:"column:course_id;not null" json:"course_id"`
 
-	Course Course `gorm:"foreignKey:CourseID"`
+	Course   Course   `gorm:"foreignKey:course_id"`
+	Semester Semester `gorm:"foreignKey:semester_id"`
+}
+type Semester struct {
+	ID int `gorm:"primaryKey" json:"id"`
 }
 
 type TotalCourseSemester struct {
@@ -150,6 +153,7 @@ func AutoMigrate(db *gorm.DB) {
 		&CoursePrerequisite{},
 		&TotalLearningCourse{},
 		&Semester{},
+		&SemesterCourse{},
 		&TotalCourseSemester{},
 	)
 	if err != nil {
