@@ -38,15 +38,15 @@
               </td>
               <td>
                 <button @click="editModule(module)" v-if="!module.editing">Edit</button>
-                <button @click="saveEditedModule(module)" v-if="module.editing">Submit</button>
+                <button @click="saveEditedModule(editedModule, module)" v-if="module.editing">Submit</button>
                 <button @click="cancelEdit(module)" v-if="module.editing">Cancel</button>
-                <button @click="deleteModule(module)" v-if="!module.editing">Delete</button>
+                <button @click="deleteModule(module.id)" v-if="!module.editing">Delete</button>
               </td>
             </tr>
             <!-- Add new module row -->
             <tr>
               <td></td>
-              <td><input v-model="newModule.code" /></td>
+              <td><input v-model="newModule.code"/></td>
               <td><input v-model="newModule.name_kz" /></td>
               <td><input v-model="newModule.name_ru" /></td>
               <td><input v-model="newModule.name_en" /></td>
@@ -71,14 +71,14 @@
   export default {
     name: "ModuleComponent",
     computed: {
-      ...mapState(['filteredModules', 'newModule', 'pagination']),
+      ...mapState('courseModule', ['filteredModules', 'newModule', 'pagination', 'editedModule']),
     },
     created() {
       this.fetchModules();
     },
     methods: {
-      ...mapActions(['fetchModules', 'addNewModule', 'deleteModule', 'updateModule']),
-      ...mapGetters(['totalPages']),
+      ...mapActions('courseModule', ['fetchModules', 'addNewModule', 'deleteModule', 'updateModule']),
+      ...mapGetters('courseModule', ['totalPages']),
       editModule(module) {
         module.editing = true;
         this.editedModule.id = String(module.id);
@@ -87,9 +87,9 @@
         this.editedModule.name_ru = module.name_ru;
         this.editedModule.name_en = module.name_en;
       },
-      saveEditedModule(module) {
+      saveEditedModule(module, currentmodule) {
         this.updateModule(module);
-        this.cancelEdit(module);
+        this.cancelEdit(currentmodule);
       },
       cancelEdit(module) {
         module.editing = false;

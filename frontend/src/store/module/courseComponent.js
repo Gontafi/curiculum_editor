@@ -1,6 +1,15 @@
 /* eslint-disable */
 export default {
+    namespaced: true,
+    name:"courseComponent",
     state: {
+      newModule: {
+        id: '0',
+        code: '',           
+        name_kz: '',        
+        name_ru: '',        
+        name_en: '',        
+      },
         filteredComponents: [],
         currentComponent: {
           editing: false,
@@ -35,7 +44,7 @@ export default {
           state.filteredComponents = filteredComponents;
         },
         ADD_COMPONENT(state, component) {
-          state.components.push(component);
+          state.filteredComponents.push(component);
         },
         CLEAR_NEW_COMPONENT(state) {
           state.newComponent = {
@@ -50,13 +59,13 @@ export default {
           };
         },
         EDIT_COMPONENT(state, editedComponent) {
-            const index = state.components.findIndex((c) => c.id === editedComponent.id);
+            const index = state.filteredComponents.findIndex((c) => c.id === editedComponent.id);
             if (index !== -1) {
-              state.components[index] = editedComponent;
+              state.filteredComponents[index] = editedComponent;
             }
           },
         DELETE_COMPONENT(state, componentId) {
-            state.components = state.components.filter((c) => c.id !== componentId);
+            state.filteredComponents = state.filteredComponents.filter((c) => c.id !== componentId);
         },
       },
       actions: {
@@ -139,6 +148,9 @@ export default {
       getters: {
         allFilteredComponents: (state) => {
           return state.filteredComponents;
+        },
+        totalPages: (state) => {
+          return Math.ceil(state.filteredComponents.length / state.pagination.itemsPerPage);
         },
       },
 };

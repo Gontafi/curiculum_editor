@@ -52,9 +52,9 @@
               </td>
               <td>
                 <button @click="editComponent(component)" v-if="!component.editing">Edit</button>
-                <button @click="saveEditedComponent(editedComponent)" v-if="component.editing">Submit</button>
+                <button @click="saveEditedComponent(editedComponent, component)" v-if="component.editing">Submit</button>
                 <button @click="cancelEdit(component)" v-if="component.editing">Cancel</button>
-                <button @click="deleteComponent(component)" v-if="!component.editing">Delete</button>
+                <button @click="deleteComponent(component.id)" v-if="!component.editing">Delete</button>
               </td>
             </tr>
             <tr>
@@ -86,14 +86,14 @@
   export default {
     name: "ComponentComponent",
     computed: {
-      ...mapState(['filteredComponents', 'newComponent', "pagination", "editedComponent"]),
+      ...mapState("courseComponent",['filteredComponents', 'newComponent', "pagination", "editedComponent"]),
     },
     created() {
       this.fetchComponents();
     },
     methods: {
-      ...mapActions(['fetchComponents', 'addNewComponent', 'deleteComponent', 'updateComponent']),
-      ...mapGetters(['totalPages']),
+       ...mapActions("courseComponent", ['fetchComponents', 'addNewComponent', 'deleteComponent', 'updateComponent']),
+       ...mapGetters("courseComponent", ['totalPages', "allFilteredComponents"]),
       editComponent(component) {
         component.editing = true;
         this.editedComponent.id = String(component.id);
@@ -105,9 +105,9 @@
         this.editedComponent.description_ru = component.description_ru;
         this.editedComponent.order = String(component.order);
       },
-      saveEditedComponent(component) {
+      saveEditedComponent(component, currentCompoent) {
         this.updateComponent(component);
-        this.cancelEdit(component);
+        this.cancelEdit(currentCompoent);
       },
       cancelEdit(component) {
         component.editing = false;

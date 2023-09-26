@@ -4,8 +4,7 @@ import courseModule from "./module/courseModule";
 import courseComponent from "./module/courseComponent";
 export default createStore({
   modules: {
-    courseComponent,
     courseModule,
+    courseComponent,
   },
 });
-console.log(this.modules);

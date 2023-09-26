@@ -1,5 +1,6 @@
 /* eslint-disable */
 export default{
+  namespaced: true,
   state: {
     filteredModules: [],
     currentModule: {
@@ -7,21 +8,21 @@ export default{
     },
     newModule: {
       id: '0',
-      code: '',           // Add your module properties here
+      code: '',           
       name_kz: '',        
       name_ru: '',        
       name_en: '',        
     },
     editedModule: {
       id: '0',
-      code: '',           // Add your module properties here
+      code: '',           
       name_kz: '',        
       name_ru: '',        
       name_en: '',        
     },
     pagination: {
       page: 1,
-      itemsPerPage: 10, // You can adjust the number of items per page
+      itemsPerPage: 10, 
     },
   },
   mutations: {
@@ -29,7 +30,7 @@ export default{
       state.filteredModules = filteredModules;
     },
     ADD_MODULE(state, module) {
-      state.modules.push(module);
+      state.filteredModules.push(module);
     },
     CLEAR_NEW_MODULE(state) {
       state.newModule = {
@@ -41,19 +42,19 @@ export default{
       };
     },
     EDIT_MODULE(state, editedModule) {
-      const index = state.modules.findIndex((m) => m.id === editedModule.id);
+      const index = state.filteredModules.findIndex((m) => m.id === editedModule.id);
       if (index !== -1) {
-        state.modules[index] = editedModule;
+        state.filteredModules[index] = editedModule;
       }
     },
     DELETE_MODULE(state, moduleId) {
-      state.modules = state.modules.filter((m) => m.id !== moduleId);
+      state.filteredModules = state.filteredModules.filter((m) => m.id !== moduleId);
     },
   },
   actions: {
     async fetchModules({ commit }) {
       try {
-        const response = await fetch('http://localhost:8080/api/modules', {
+        const response = await fetch('http://localhost:8080/api/module', {
           method: "GET",
         });
         if (!response.ok) {
@@ -67,7 +68,7 @@ export default{
     },
     async addNewModule({ commit, state }) {
       try {
-        const response = await fetch('http://localhost:8080/api/modules', {
+        const response = await fetch('http://localhost:8080/api/module', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ export default{
         }
 
         const newModule = await response.json();
-        commit('ADD_MODULE', newModule);
+        commit('ADD_MODULE', state.newModule);
         commit('CLEAR_NEW_MODULE');
       } catch (error) {
         console.error('Error adding a new module:', error);
@@ -89,7 +90,7 @@ export default{
     },
     async updateModule({ commit }, editedModule) {
       try {
-        const response = await fetch(`http://localhost:8080/api/modules/${editedModule.id}`, {
+        const response = await fetch(`http://localhost:8080/api/module/${editedModule.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -109,7 +110,7 @@ export default{
     },
     async deleteModule({ commit }, moduleId) {
       try {
-        const response = await fetch(`http://localhost:8080/api/modules/${moduleId}`, {
+        const response = await fetch(`http://localhost:8080/api/module/${moduleId}`, {
           method: 'DELETE',
           headers: {
             "Access-Control-Allow-Origin": "*",
