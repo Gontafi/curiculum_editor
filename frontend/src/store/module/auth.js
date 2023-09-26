@@ -1,5 +1,10 @@
+/* eslint-disable */
 const state = {
     accessToken: null,
+    input: {
+      username: "",
+      password: "",
+    }
   };
   
   const mutations = {
@@ -12,7 +17,34 @@ const state = {
   };
   
   const actions = {
-    // Your actions for login, logout, and token refresh can go here
+    async login({state, commit}) {
+      try {
+        const response = await fetch("http://localhost:8080/login", {
+            method: "POST",
+            body: JSON.stringify(state.input),
+          });
+        if (!response.ok) {
+          throw new Error('Failed to login');
+        }
+        commit("setAccessToken", response.token)
+      } catch (error) {
+        console.error('Error adding while login:', error);
+      }
+    },
+    async signUp({state, commit}) {
+      try{
+        const response = await fetch("http://localhost:8080/sign-up", {
+          method: "POST",
+          body: JSON.stringify(state.input),
+        });
+        if (!response.ok){
+          throw new Error("Failed to register user");
+        }
+        commit()
+      } catch(error) {
+        console.error("error while trying to registrate", error)
+      }
+    },
   };
   
   const getters = {
