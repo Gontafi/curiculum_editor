@@ -115,11 +115,13 @@
       prevPage() {
         if (this.pagination.page > 1) {
           this.pagination.page--;
+          this.fetchComponents();
         }
       },
       nextPage() {
         if (this.pagination.page < this.totalPages) {
           this.pagination.page++;
+          this.fetchComponents();
         }
       },
     },
