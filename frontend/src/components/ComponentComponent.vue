@@ -105,9 +105,9 @@
         this.editedComponent.description_ru = component.description_ru;
         this.editedComponent.order = String(component.order);
       },
-      saveEditedComponent(component, currentCompoent) {
+      saveEditedComponent(component, currentComponent) {
         this.updateComponent(component);
-        this.cancelEdit(currentCompoent);
+        this.cancelEdit(currentComponent);
       },
       cancelEdit(component) {
         component.editing = false;
@@ -115,11 +115,13 @@
       prevPage() {
         if (this.pagination.page > 1) {
           this.pagination.page--;
+          this.fetchComponents();
         }
       },
       nextPage() {
         if (this.pagination.page < this.totalPages) {
           this.pagination.page++;
+          this.fetchComponents();
         }
       },
     },

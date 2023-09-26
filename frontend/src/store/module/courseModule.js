@@ -42,7 +42,7 @@ export default{
       };
     },
     EDIT_MODULE(state, editedModule) {
-      const index = state.filteredModules.findIndex((m) => m.id === editedModule.id);
+      const index = state.filteredModules.findIndex((m) => String(m.id) === editedModule.id);
       if (index !== -1) {
         state.filteredModules[index] = editedModule;
       }
@@ -52,9 +52,9 @@ export default{
     },
   },
   actions: {
-    async fetchModules({ commit }) {
+    async fetchModules({ commit, state }) {
       try {
-        const response = await fetch('http://localhost:8080/api/module', {
+        const response = await fetch(`http://localhost:8080/api/module?${state.pagination.page}&perPage=${state.pagination.itemsPerPage}`, {
           method: "GET",
         });
         if (!response.ok) {
@@ -82,6 +82,7 @@ export default{
         }
 
         const newModule = await response.json();
+        state.newModule.id = newModule.id;
         commit('ADD_MODULE', state.newModule);
         commit('CLEAR_NEW_MODULE');
       } catch (error) {

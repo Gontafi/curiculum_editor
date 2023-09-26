@@ -59,7 +59,7 @@ export default {
           };
         },
         EDIT_COMPONENT(state, editedComponent) {
-            const index = state.filteredComponents.findIndex((c) => c.id === editedComponent.id);
+            const index = state.filteredComponents.findIndex((c) => String(c.id) === editedComponent.id);
             if (index !== -1) {
               state.filteredComponents[index] = editedComponent;
             }
@@ -69,9 +69,9 @@ export default {
         },
       },
       actions: {
-        async fetchComponents({ commit }) {
+        async fetchComponents({ commit, state }) {
           try {
-            const response = await fetch('http://localhost:8080/api/professional-component', {
+            const response = await fetch(`http://localhost:8080/api/professional-component?page=${state.pagination.page}&perPage=${state.pagination.itemsPerPage}`, {
               method: "GET",
             });
             if (!response.ok) {
@@ -99,7 +99,8 @@ export default {
             }
     
             const newComponent = await response.json();
-            commit('ADD_COMPONENT', newComponent);
+            state.newComponent.id = newComponent.id;
+            commit('ADD_COMPONENT', state.newComponent);
             commit('CLEAR_NEW_COMPONENT');
           } catch (error) {
             console.error('Error adding a new component:', error);
