@@ -14,7 +14,7 @@ type RepositoryInterface interface {
 	cacheCourses(ctx context.Context, courses []models.Course) error
 	getCachedCourse(ctx context.Context, id int) (*models.Course, error)
 	cacheCourse(ctx context.Context, course *models.Course) error
-	CreateCourse(ctx context.Context, course *models.Course) error
+	CreateCourse(ctx context.Context, course *models.Course) (int, error)
 	UpdateCourse(ctx context.Context, course *models.Course) error
 	DeleteCourse(ctx context.Context, id int) error
 	clearCachedCourses(ctx context.Context)
@@ -25,14 +25,14 @@ type RepositoryInterface interface {
 	cacheDepartments(ctx context.Context, departments []models.Department) error
 	getCachedDepartment(ctx context.Context, id int) (*models.Department, error)
 	cacheDepartment(ctx context.Context, department *models.Department) error
-	CreateDepartment(ctx context.Context, department *models.Department) error
+	CreateDepartment(ctx context.Context, department *models.Department) (int, error)
 	UpdateDepartment(ctx context.Context, department *models.Department) error
 	DeleteDepartment(ctx context.Context, id int) error
 	clearCachedDepartments(ctx context.Context)
 	clearCachedDepartment(ctx context.Context, id int)
 	GetAllTotalCourseSemesters(limit int, offset int) ([]models.TotalCourseSemester, error)
 	GetTotalCourseSemesterByID(id int) (*models.TotalCourseSemester, error)
-	CreateTotalCourseSemester(totalCourseSemester *models.TotalCourseSemester) error
+	CreateTotalCourseSemester(totalCourseSemester *models.TotalCourseSemester) (int, error)
 	UpdateTotalCourseSemester(totalCourseSemester *models.TotalCourseSemester) error
 	DeleteTotalCourseSemester(id int) error
 	GetAllCycles(ctx context.Context, limit int, offset int) ([]models.Cycle, error)
@@ -41,14 +41,14 @@ type RepositoryInterface interface {
 	cacheCycles(ctx context.Context, cycles []models.Cycle) error
 	getCachedCycle(ctx context.Context, id int) (*models.Cycle, error)
 	cacheCycle(ctx context.Context, cycle *models.Cycle) error
-	CreateCycle(ctx context.Context, cycle *models.Cycle) error
+	CreateCycle(ctx context.Context, cycle *models.Cycle) (int, error)
 	UpdateCycle(ctx context.Context, cycle *models.Cycle) error
 	DeleteCycle(ctx context.Context, id int) error
 	clearCachedCycles(ctx context.Context)
 	clearCachedCycle(ctx context.Context, id int)
-	GetAllProfessionalComponents() ([]models.ProfessionalComponent, error)
+	GetAllProfessionalComponents(limit int, offset int) ([]models.ProfessionalComponent, error)
 	GetProfessionalComponentByID(id int) (*models.ProfessionalComponent, error)
-	CreateProfessionalComponent(profComponent *models.ProfessionalComponent) error
+	CreateProfessionalComponent(profComponent *models.ProfessionalComponent) (int, error)
 	UpdateProfessionalComponent(profComponent *models.ProfessionalComponent) error
 	DeleteProfessionalComponent(id int) error
 	AddUser(user models.User) (int, error)
@@ -62,7 +62,7 @@ type RepositoryInterface interface {
 	AllRoles() ([]models.Role, error)
 	GetRoleByID(id int) (models.Role, error)
 	GetTotalLearningCourseByID(id int) (*models.TotalLearningCourse, error)
-	CreateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) error
+	CreateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) (int, error)
 	UpdateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) error
 	DeleteTotalLearningCourse(id int) error
 	GetUserRole(userID int) (*models.Role, error)
@@ -72,19 +72,19 @@ type RepositoryInterface interface {
 	cacheComponents(ctx context.Context, components []models.Component) error
 	getCachedComponent(ctx context.Context, id int) (*models.Component, error)
 	cacheComponent(ctx context.Context, component *models.Component) error
-	CreateComponent(ctx context.Context, component *models.Component) error
+	CreateComponent(ctx context.Context, component *models.Component) (int, error)
 	UpdateComponent(ctx context.Context, component *models.Component) error
 	DeleteComponent(ctx context.Context, id int) error
 	clearCachedComponents(ctx context.Context)
 	clearCachedComponent(ctx context.Context, id int)
-	GetAllCoursePrerequisite() ([]models.CoursePrerequisite, error)
-	CreateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) error
+	GetAllCoursePrerequisite(limit int, offset int) ([]models.CoursePrerequisite, error)
+	CreateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) (int, error)
 	GetCoursePrerequisiteByID(id int) (*models.CoursePrerequisite, error)
 	UpdateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) error
 	DeleteCoursePrerequisite(id int) error
 	GetAllSemesters(limit int, offset int) ([]models.SemesterCourse, error)
 	GetSemesterByID(id int) (*models.SemesterCourse, error)
-	CreateSemester(semester *models.SemesterCourse) error
+	CreateSemester(semester *models.SemesterCourse) (int, error)
 	UpdateSemester(semester *models.SemesterCourse) error
 	DeleteSemester(id int) error
 	GetAllModules(ctx context.Context, limit int, offset int) ([]models.Module, error)
@@ -93,7 +93,7 @@ type RepositoryInterface interface {
 	cacheModules(ctx context.Context, modules []models.Module) error
 	getCachedModule(ctx context.Context, id int) (*models.Module, error)
 	cacheModule(ctx context.Context, module *models.Module) error
-	CreateModule(ctx context.Context, module *models.Module) error
+	CreateModule(ctx context.Context, module *models.Module) (int, error)
 	UpdateModule(ctx context.Context, module *models.Module) error
 	DeleteModule(ctx context.Context, id int) error
 	clearCachedModules(ctx context.Context)

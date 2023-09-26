@@ -63,12 +63,16 @@ func (h *CrudHandler) CreateSemesterCourse(c *fiber.Ctx) error {
 		SemesterID: req.SemesterID,
 	}
 
-	if err := h.Service.CreateSemester(&semester); err != nil {
+	id, err := h.Service.CreateSemester(&semester)
+	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create semester"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Semester created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Semester created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) UpdateSemester(c *fiber.Ctx) error {

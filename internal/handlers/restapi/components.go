@@ -69,13 +69,16 @@ func (h *CrudHandler) CreateComponent(c *fiber.Ctx) error {
 		DescriptionEn: inputComponent.DescriptionEn,
 		Order:         inputComponent.Order,
 	}
-	err = h.Service.CreateComponent(c.Context(), &component)
+	id, err := h.Service.CreateComponent(c.Context(), &component)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create component"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Component created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Component created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) UpdateComponent(c *fiber.Ctx) error {

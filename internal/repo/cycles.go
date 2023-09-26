@@ -15,7 +15,7 @@ func (r *Repository) GetAllCycles(ctx context.Context, limit int, offset int) ([
 	}
 
 	var cyclesFromDB []models.Cycle
-	err = r.db.Find(&cyclesFromDB).Limit(limit).Offset(offset).Error
+	err = r.db.Limit(limit).Offset(offset).Find(&cyclesFromDB).Error
 	if err != nil {
 		return nil, err
 	}
@@ -100,13 +100,13 @@ func (r *Repository) cacheCycle(ctx context.Context, cycle *models.Cycle) error 
 	return r.rd.Set(ctx, key, data, time.Hour).Err()
 }
 
-func (r *Repository) CreateCycle(ctx context.Context, cycle *models.Cycle) error {
-	if err := r.db.Create(cycle).Error; err != nil {
-		return err
+func (r *Repository) CreateCycle(ctx context.Context, cycle *models.Cycle) (int, error) {
+	if err := r.db.Create(&cycle).Error; err != nil {
+		return 0, err
 	}
 
 	r.clearCachedCycles(ctx)
-	return nil
+	return cycle.ID, nil
 }
 
 func (r *Repository) UpdateCycle(ctx context.Context, cycle *models.Cycle) error {

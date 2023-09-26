@@ -23,7 +23,7 @@ func (s *Service) GetModuleByID(ctx context.Context, id int) (*models.Module, er
 	return module, nil
 }
 
-func (s *Service) CreateModule(ctx context.Context, module *models.Module) error {
+func (s *Service) CreateModule(ctx context.Context, module *models.Module) (int, error) {
 	return s.repo.CreateModule(ctx, module)
 }
 

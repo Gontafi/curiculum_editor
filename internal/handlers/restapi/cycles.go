@@ -65,12 +65,16 @@ func (h *CrudHandler) CreateCycle(c *fiber.Ctx) error {
 		CodeEn:   req.CodeEn,
 	}
 
-	if err := h.Service.CreateCycle(c.Context(), &cycle); err != nil {
+	id, err := h.Service.CreateCycle(c.Context(), &cycle)
+	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create cycle"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Cycle created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Cycle created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) UpdateCycle(c *fiber.Ctx) error {

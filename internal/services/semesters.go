@@ -22,7 +22,7 @@ func (s *Service) GetSemesterByID(id int) (*models.SemesterCourse, error) {
 	return semester, nil
 }
 
-func (s *Service) CreateSemester(semester *models.SemesterCourse) error {
+func (s *Service) CreateSemester(semester *models.SemesterCourse) (int, error) {
 	return s.repo.CreateSemester(semester)
 }
 

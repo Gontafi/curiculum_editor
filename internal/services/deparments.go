@@ -23,7 +23,7 @@ func (s *Service) GetDepartmentByID(ctx context.Context, id int) (*models.Depart
 	return department, nil
 }
 
-func (s *Service) CreateDepartment(ctx context.Context, department *models.Department) error {
+func (s *Service) CreateDepartment(ctx context.Context, department *models.Department) (int, error) {
 	return s.repo.CreateDepartment(ctx, department)
 }
 

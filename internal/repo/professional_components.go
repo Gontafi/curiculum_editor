@@ -2,9 +2,9 @@ package repo
 
 import "educational_program_creator/internal/models"
 
-func (r *Repository) GetAllProfessionalComponents() ([]models.ProfessionalComponent, error) {
+func (r *Repository) GetAllProfessionalComponents(limit int, offset int) ([]models.ProfessionalComponent, error) {
 	var professionalComponents []models.ProfessionalComponent
-	err := r.db.Find(&professionalComponents).Error
+	err := r.db.Limit(limit).Offset(offset).Find(&professionalComponents).Error
 	if err != nil {
 		return nil, err
 	}
@@ -20,8 +20,12 @@ func (r *Repository) GetProfessionalComponentByID(id int) (*models.ProfessionalC
 	return &professionalComponent, nil
 }
 
-func (r *Repository) CreateProfessionalComponent(profComponent *models.ProfessionalComponent) error {
-	return r.db.Create(profComponent).Error
+func (r *Repository) CreateProfessionalComponent(profComponent *models.ProfessionalComponent) (int, error) {
+	err := r.db.Create(&profComponent).Error
+	if err != nil {
+		return 0, err
+	}
+	return profComponent.ID, nil
 }
 
 func (r *Repository) UpdateProfessionalComponent(profComponent *models.ProfessionalComponent) error {

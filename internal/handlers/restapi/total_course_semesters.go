@@ -58,13 +58,16 @@ func (h *CrudHandler) CreateTotalCourseSemester(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	err = h.Service.CreateTotalCourseSemester(&totalCourseSemester)
+	id, err := h.Service.CreateTotalCourseSemester(&totalCourseSemester)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create total course semester"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Total course semester created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Total course semester created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) UpdateTotalCourseSemester(c *fiber.Ctx) error {

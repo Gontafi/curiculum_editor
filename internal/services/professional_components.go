@@ -1,9 +1,13 @@
 package services
 
-import "educational_program_creator/internal/models"
+import (
+	"educational_program_creator/internal/models"
+	"educational_program_creator/pkg/utils"
+)
 
-func (s *Service) GetAllProfessionalComponents() ([]models.ProfessionalComponent, error) {
-	components, err := s.repo.GetAllProfessionalComponents()
+func (s *Service) GetAllProfessionalComponents(page int, perPage int) ([]models.ProfessionalComponent, error) {
+	limit, offset := utils.CalculateLimitOffset(page, perPage)
+	components, err := s.repo.GetAllProfessionalComponents(limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -18,7 +22,7 @@ func (s *Service) GetProfessionalComponentByID(id int) (*models.ProfessionalComp
 	return component, nil
 }
 
-func (s *Service) CreateProfessionalComponent(component *models.ProfessionalComponent) error {
+func (s *Service) CreateProfessionalComponent(component *models.ProfessionalComponent) (int, error) {
 	return s.repo.CreateProfessionalComponent(component)
 }
 

@@ -64,12 +64,16 @@ func (h *CrudHandler) CreateDepartment(c *fiber.Ctx) error {
 		DescriptionEn: req.DescriptionEn,
 	}
 
-	if err := h.Service.CreateDepartment(c.Context(), &department); err != nil {
+	id, err := h.Service.CreateDepartment(c.Context(), &department)
+	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create department"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Department created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Department created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) UpdateDepartment(c *fiber.Ctx) error {

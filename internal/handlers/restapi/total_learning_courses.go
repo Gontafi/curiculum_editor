@@ -36,13 +36,16 @@ func (h *CrudHandler) CreateTotalLearningCourse(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	err = h.Service.CreateTotalLearningCourse(&totalLearningCourse)
+	id, err := h.Service.CreateTotalLearningCourse(&totalLearningCourse)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create total learning course"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Total learning course created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Total learning course created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) DeleteTotalLearningCourse(c *fiber.Ctx) error {

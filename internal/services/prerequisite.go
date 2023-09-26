@@ -1,11 +1,15 @@
 package services
 
-import "educational_program_creator/internal/models"
+import (
+	"educational_program_creator/internal/models"
+	"educational_program_creator/pkg/utils"
+)
 
-func (s *Service) GetAllCoursePrerequisite() ([]models.CoursePrerequisite, error) {
-	return s.repo.GetAllCoursePrerequisite()
+func (s *Service) GetAllCoursePrerequisite(page int, perPage int) ([]models.CoursePrerequisite, error) {
+	limit, offset := utils.CalculateLimitOffset(page, perPage)
+	return s.repo.GetAllCoursePrerequisite(limit, offset)
 }
-func (s *Service) CreateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) error {
+func (s *Service) CreateCoursePrerequisite(coursePrerequisite *models.CoursePrerequisite) (int, error) {
 	return s.repo.CreateCoursePrerequisite(coursePrerequisite)
 }
 

@@ -23,7 +23,7 @@ func (s *Service) GetCourseByID(ctx context.Context, id int) (*models.Course, er
 	return course, nil
 }
 
-func (s *Service) CreateCourse(ctx context.Context, course *models.Course) error {
+func (s *Service) CreateCourse(ctx context.Context, course *models.Course) (int, error) {
 	return s.repo.CreateCourse(ctx, course)
 }
 

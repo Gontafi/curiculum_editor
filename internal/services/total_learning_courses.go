@@ -10,7 +10,7 @@ func (s *Service) GetTotalLearningCourseByID(id int) (*models.TotalLearningCours
 	return totalLearningCourse, nil
 }
 
-func (s *Service) CreateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) error {
+func (s *Service) CreateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) (int, error) {
 	return s.repo.CreateTotalLearningCourse(totalLearningCourse)
 }
 

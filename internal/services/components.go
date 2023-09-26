@@ -19,9 +19,9 @@ func (s *Service) GetComponentByID(ctx context.Context, id int) (*models.Compone
 	return s.repo.GetComponentByID(ctx, id)
 }
 
-func (s *Service) CreateComponent(ctx context.Context, component *models.Component) error {
+func (s *Service) CreateComponent(ctx context.Context, component *models.Component) (int, error) {
 	if component == nil {
-		return errors.New("nil component provided")
+		return 0, errors.New("nil component provided")
 	}
 	return s.repo.CreateComponent(ctx, component)
 }

@@ -15,7 +15,7 @@ func (r *Repository) GetAllComponents(ctx context.Context, limit int, offset int
 	}
 
 	var componentsFromDB []models.Component
-	err = r.db.Find(&componentsFromDB).Limit(limit).Offset(offset).Error
+	err = r.db.Limit(limit).Offset(offset).Find(&componentsFromDB).Error
 	if err != nil {
 		return nil, err
 	}
@@ -100,13 +100,13 @@ func (r *Repository) cacheComponent(ctx context.Context, component *models.Compo
 	return r.rd.Set(ctx, key, data, time.Hour).Err()
 }
 
-func (r *Repository) CreateComponent(ctx context.Context, component *models.Component) error {
-	if err := r.db.Create(component).Error; err != nil {
-		return err
+func (r *Repository) CreateComponent(ctx context.Context, component *models.Component) (int, error) {
+	if err := r.db.Create(&component).Error; err != nil {
+		return 0, err
 	}
 
 	r.clearCachedComponents(ctx)
-	return nil
+	return component.ID, nil
 }
 
 func (r *Repository) UpdateComponent(ctx context.Context, component *models.Component) error {

@@ -11,8 +11,13 @@ func (r *Repository) GetTotalLearningCourseByID(id int) (*models.TotalLearningCo
 	return &totalLearningCourse, nil
 }
 
-func (r *Repository) CreateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) error {
-	return r.db.Create(totalLearningCourse).Error
+func (r *Repository) CreateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) (int, error) {
+	err := r.db.Create(&totalLearningCourse).Error
+	if err != nil {
+		return 0, err
+	}
+
+	return totalLearningCourse.ID, err
 }
 
 func (r *Repository) UpdateTotalLearningCourse(totalLearningCourse *models.TotalLearningCourse) error {

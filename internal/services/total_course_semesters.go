@@ -22,7 +22,7 @@ func (s *Service) GetTotalCourseSemesterByID(id int) (*models.TotalCourseSemeste
 	return totalCourseSemester, nil
 }
 
-func (s *Service) CreateTotalCourseSemester(totalCourseSemester *models.TotalCourseSemester) error {
+func (s *Service) CreateTotalCourseSemester(totalCourseSemester *models.TotalCourseSemester) (int, error) {
 	return s.repo.CreateTotalCourseSemester(totalCourseSemester)
 }
 

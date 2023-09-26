@@ -15,7 +15,7 @@ func (r *Repository) GetAllDepartments(ctx context.Context, limit int, offset in
 	}
 
 	var departmentsFromDB []models.Department
-	err = r.db.Find(&departmentsFromDB).Limit(limit).Offset(offset).Error
+	err = r.db.Limit(limit).Offset(offset).Find(&departmentsFromDB).Error
 	if err != nil {
 		return nil, err
 	}
@@ -100,13 +100,13 @@ func (r *Repository) cacheDepartment(ctx context.Context, department *models.Dep
 	return r.rd.Set(ctx, key, data, time.Hour).Err()
 }
 
-func (r *Repository) CreateDepartment(ctx context.Context, department *models.Department) error {
-	if err := r.db.Create(department).Error; err != nil {
-		return err
+func (r *Repository) CreateDepartment(ctx context.Context, department *models.Department) (int, error) {
+	if err := r.db.Create(&department).Error; err != nil {
+		return 0, err
 	}
 
 	r.clearCachedDepartments(ctx)
-	return nil
+	return department.ID, nil
 }
 
 func (r *Repository) UpdateDepartment(ctx context.Context, department *models.Department) error {

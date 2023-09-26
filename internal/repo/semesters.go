@@ -4,7 +4,7 @@ import "educational_program_creator/internal/models"
 
 func (r *Repository) GetAllSemesters(limit int, offset int) ([]models.SemesterCourse, error) {
 	var semesters []models.SemesterCourse
-	err := r.db.Find(&semesters).Limit(limit).Offset(offset).Error
+	err := r.db.Limit(limit).Offset(offset).Find(&semesters).Error
 	if err != nil {
 		return nil, err
 	}
@@ -20,8 +20,12 @@ func (r *Repository) GetSemesterByID(id int) (*models.SemesterCourse, error) {
 	return &semester, nil
 }
 
-func (r *Repository) CreateSemester(semester *models.SemesterCourse) error {
-	return r.db.Create(semester).Error
+func (r *Repository) CreateSemester(semester *models.SemesterCourse) (int, error) {
+	err := r.db.Create(&semester).Error
+	if err != nil {
+		return 0, err
+	}
+	return semester.ID, nil
 }
 
 func (r *Repository) UpdateSemester(semester *models.SemesterCourse) error {

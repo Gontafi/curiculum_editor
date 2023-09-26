@@ -15,7 +15,7 @@ func (r *Repository) GetAllModules(ctx context.Context, limit int, offset int) (
 	}
 
 	var modulesFromDB []models.Module
-	err = r.db.Find(&modulesFromDB).Limit(limit).Offset(offset).Error
+	err = r.db.Limit(limit).Offset(offset).Find(&modulesFromDB).Error
 	if err != nil {
 		return nil, err
 	}
@@ -100,13 +100,13 @@ func (r *Repository) cacheModule(ctx context.Context, module *models.Module) err
 	return r.rd.Set(ctx, key, data, time.Hour).Err()
 }
 
-func (r *Repository) CreateModule(ctx context.Context, module *models.Module) error {
-	if err := r.db.Create(module).Error; err != nil {
-		return err
+func (r *Repository) CreateModule(ctx context.Context, module *models.Module) (int, error) {
+	if err := r.db.Create(&module).Error; err != nil {
+		return 0, err
 	}
 
 	r.clearCachedModules(ctx)
-	return nil
+	return module.ID, nil
 }
 
 func (r *Repository) UpdateModule(ctx context.Context, module *models.Module) error {

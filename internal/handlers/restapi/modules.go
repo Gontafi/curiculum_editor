@@ -65,12 +65,16 @@ func (h *CrudHandler) CreateModule(c *fiber.Ctx) error {
 		NameEn: req.NameEn,
 	}
 
-	if err := h.Service.CreateModule(c.Context(), &module); err != nil {
+	id, err := h.Service.CreateModule(c.Context(), &module)
+	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create module"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Module created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Module created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) UpdateModule(c *fiber.Ctx) error {

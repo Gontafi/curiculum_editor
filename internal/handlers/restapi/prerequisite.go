@@ -9,7 +9,21 @@ import (
 )
 
 func (h *CrudHandler) GetAllCoursePrerequisites(c *fiber.Ctx) error {
-	prerequisites, err := h.Service.GetAllCoursePrerequisite()
+	pageParam := c.Query("page", "1")
+	perPageParam := c.Query("perPage", "10")
+
+	page, err := strconv.Atoi(pageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+	perPage, err := strconv.Atoi(perPageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+
+	prerequisites, err := h.Service.GetAllCoursePrerequisite(page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve semesters"})
@@ -29,12 +43,16 @@ func (h *CrudHandler) CreateCoursePrerequisite(c *fiber.Ctx) error {
 		PrerequisiteID: req.PrerequisiteID,
 	}
 
-	if err := h.Service.CreateCoursePrerequisite(&coursePrerequisite); err != nil {
+	id, err := h.Service.CreateCoursePrerequisite(&coursePrerequisite)
+	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create course prerequisite"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Course prerequisite created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Course prerequisite created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) GetCoursePrerequisiteByID(c *fiber.Ctx) error {

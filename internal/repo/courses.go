@@ -15,7 +15,7 @@ func (r *Repository) GetAllCourses(ctx context.Context, limit int, offset int) (
 	}
 
 	var coursesFromDB []models.Course
-	err = r.db.Find(&coursesFromDB).Limit(limit).Offset(offset).Error
+	err = r.db.Limit(limit).Offset(offset).Find(&coursesFromDB).Error
 	if err != nil {
 		return nil, err
 	}
@@ -100,13 +100,13 @@ func (r *Repository) cacheCourse(ctx context.Context, course *models.Course) err
 	return r.rd.Set(ctx, key, data, time.Hour).Err()
 }
 
-func (r *Repository) CreateCourse(ctx context.Context, course *models.Course) error {
-	if err := r.db.Create(course).Error; err != nil {
-		return err
+func (r *Repository) CreateCourse(ctx context.Context, course *models.Course) (int, error) {
+	if err := r.db.Create(&course).Error; err != nil {
+		return 0, err
 	}
 
 	r.clearCachedCourses(ctx)
-	return nil
+	return course.ID, nil
 }
 
 func (r *Repository) UpdateCourse(ctx context.Context, course *models.Course) error {

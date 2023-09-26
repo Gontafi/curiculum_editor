@@ -81,12 +81,16 @@ func (h *CrudHandler) CreateCourse(c *fiber.Ctx) error {
 		SROHour:                 req.SROHour,
 	}
 
-	if err := h.Service.CreateCourse(c.Context(), &course); err != nil {
+	id, err := h.Service.CreateCourse(c.Context(), &course)
+	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create course"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Course created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Course created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) UpdateCourse(c *fiber.Ctx) error {

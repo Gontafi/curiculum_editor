@@ -23,7 +23,7 @@ func (s *Service) GetCycleByID(ctx context.Context, id int) (*models.Cycle, erro
 	return cycle, nil
 }
 
-func (s *Service) CreateCycle(ctx context.Context, cycle *models.Cycle) error {
+func (s *Service) CreateCycle(ctx context.Context, cycle *models.Cycle) (int, error) {
 	return s.repo.CreateCycle(ctx, cycle)
 }
 

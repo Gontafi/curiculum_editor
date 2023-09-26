@@ -9,7 +9,21 @@ import (
 )
 
 func (h *CrudHandler) GetAllProfessionalComponents(c *fiber.Ctx) error {
-	components, err := h.Service.GetAllProfessionalComponents()
+	pageParam := c.Query("page", "1")
+	perPageParam := c.Query("perPage", "10")
+
+	page, err := strconv.Atoi(pageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+	perPage, err := strconv.Atoi(perPageParam)
+	if err != nil {
+		log.Println(err)
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
+	}
+
+	components, err := h.Service.GetAllProfessionalComponents(page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve professional components"})
@@ -54,12 +68,16 @@ func (h *CrudHandler) CreateProfessionalComponent(c *fiber.Ctx) error {
 		Order:         req.Order,
 	}
 
-	if err := h.Service.CreateProfessionalComponent(&component); err != nil {
+	id, err := h.Service.CreateProfessionalComponent(&component)
+	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create professional component"})
 	}
 
-	return c.Status(http.StatusCreated).JSON(fiber.Map{"message": "Professional component created successfully"})
+	return c.Status(http.StatusCreated).JSON(fiber.Map{
+		"message": "Professional component created successfully",
+		"id":      id,
+	})
 }
 
 func (h *CrudHandler) UpdateProfessionalComponent(c *fiber.Ctx) error {
