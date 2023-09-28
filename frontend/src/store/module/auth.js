@@ -1,60 +1,80 @@
 /* eslint-disable */
-const state = {
-    accessToken: null,
-    input: {
-      username: "",
-      password: "",
-    }
-  };
-  
-  const mutations = {
-    setAccessToken(state, token) {
-      state.accessToken = token;
+import router from "@/router";
+export default {
+  namespaced: true,
+  name:"auth",
+  state: {
+      logined:false,
+      credentials: {
+        username: "",
+        password: "",
+      }
+    },
+    
+  mutations: {
+    setLogin(state, bool) {
+      state.logined = bool;
     },
     clearAccessToken(state) {
       state.accessToken = null;
     },
-  };
-  
-  const actions = {
+  },
+
+  actions: {
     async login({state, commit}) {
       try {
-        const response = await fetch("http://localhost:8080/login", {
+        const response = await fetch("http://localhost:8080/api/auth/sign-in/", {
             method: "POST",
-            body: JSON.stringify(state.input),
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+            },
+            body: JSON.stringify(state.credentials),
           });
         if (!response.ok) {
           throw new Error('Failed to login');
         }
-        commit("setAccessToken", response.token)
+        const res = await response.json();
+        localStorage.setItem("jwt", res.access_token);
+        commit("setLogin", true);
+        router.push('/dashboard');
       } catch (error) {
         console.error('Error adding while login:', error);
       }
     },
-    async signUp({state, commit}) {
+    async signUp({state}) {
       try{
-        const response = await fetch("http://localhost:8080/sign-up", {
+        const response = await fetch("http://localhost:8080/api/auth/sign-up/", {
           method: "POST",
-          body: JSON.stringify(state.input),
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+          body: JSON.stringify(state.credentials),
         });
         if (!response.ok){
           throw new Error("Failed to register user");
         }
-        commit()
       } catch(error) {
         console.error("error while trying to registrate", error)
       }
     },
-  };
-  
-  const getters = {
-    isAuthenticated: (state) => !!state.accessToken,
-  };
-  
-  export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions,
-    getters,
-  };
+    logout({state}) {
+      localStorage.clear();
+      console.log("cleared:" + localStorage.getItem("jwt"));
+      state.logined = false;
+      router.push("/login");
+    },
+  },
+
+  getters: {
+    isAuthenticated: (state) => {
+      console.log("trying to access some route");
+      console.log(localStorage.getItem("jwt"));
+      if (localStorage.getItem("jwt") == null) {
+        return false;
+      }
+      return true;
+    }
+  },
+}

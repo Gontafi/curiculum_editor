@@ -2,7 +2,7 @@
 import { createStore } from "vuex";
 import courseModule from "./module/courseModule";
 import courseProfessionalComponent from "./module/professtionalComponent";
-import auth from "./module/auth";
+import authComponent from "./module/auth";
 import courseComponent from "./module/component";
 import department from "./module/department"
 import course from "./module/course";
@@ -14,7 +14,7 @@ export default createStore({
     courseProfessionalComponent,
     course,
     department,
-    auth,
+    authComponent,
     cycles,
   },
 });

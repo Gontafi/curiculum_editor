@@ -75,7 +75,7 @@ import Course from "@/components/Course.vue";
 import Departments from "@/components/Departments.vue";
 import ModuleComponent from "@/components/ModuleComponent.vue";
 import Cycles from "@/components/Cycles.vue";
-
+import store from "@/store/index.js";
   export default {
     name: "DashboardView",
     components: {
@@ -116,10 +116,7 @@ import Cycles from "@/components/Cycles.vue";
 
     // Add a method to confirm log out
     confirmLogout() {
-      // Perform your log out logic here
-      // For example, redirect to the log-in page or clear user session
-      // Once logged out, you can redirect the user to the login page
-      // this.$router.push("/login");
+      return this.$store.dispatch('authComponent/logout')
     },
 
     // Add a method to cancel log out

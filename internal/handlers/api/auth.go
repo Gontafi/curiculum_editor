@@ -1,7 +1,6 @@
 package api
 
 import (
-	"educational_program_creator/internal/models"
 	"github.com/gofiber/fiber/v2"
 	"log"
 	"net/http"
@@ -14,14 +13,15 @@ type SignInForm struct {
 
 func (h *UserHandler) SignUp(c *fiber.Ctx) error {
 
-	var user models.User
+	var user SignInForm
 	err := c.BodyParser(&user)
 	if err != nil {
+		log.Println()
 		log.Println(err)
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	userID, err := h.Service.RegisterUser(user)
+	userID, err := h.Service.RegisterUser(user.Username, user.Password)
 	if err != nil {
 		log.Println(err)
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"message": "Error registering user"})

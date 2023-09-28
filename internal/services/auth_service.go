@@ -21,9 +21,13 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func (s *Service) RegisterUser(user models.User) (int, error) {
-	user.PasswordHash = generateHashPasswordHash(user.PasswordHash)
+func (s *Service) RegisterUser(username string, password string) (int, error) {
+	passwordHash := generateHashPasswordHash(password)
 
+	user := models.User{
+		Username:     username,
+		PasswordHash: passwordHash,
+	}
 	id, err := s.repo.AddUser(user)
 	if err != nil {
 		return 0, err

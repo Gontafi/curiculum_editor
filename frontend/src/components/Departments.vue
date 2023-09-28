@@ -52,7 +52,7 @@
       <div class="pagination">
         <button @click="prevPage" :disabled="pagination.page === 1">Previous</button>
         <span>Page {{ pagination.page }} of {{ totalPages }}</span>
-        <button @click="nextPage" :disabled="pagination.page === totalPages">Next</button>
+        <button @click="nextPage" :disabled="pagination.page === totalPages()">Next</button>
       </div>
     </div>
   </template>
@@ -64,13 +64,13 @@
     name: "DepartmentComponent",
     computed: {
       ...mapState("department", ['departments', 'newDepartment', 'pagination', 'editedDepartment']),
-      ...mapGetters("department", ['totalPages']),
     },
     created() {
       this.fetchDepartments();
     },
     methods: {
       ...mapActions("department", ['fetchDepartments', 'addNewDepartment', 'deleteDepartment', 'updateDepartment']),
+      ...mapGetters("department", ['totalPages']),
       
       editDepartment(department) {
         department.editing = true;

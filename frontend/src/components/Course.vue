@@ -154,7 +154,7 @@
       <div class="pagination">
         <button @click="prevPage" :disabled="pagination.page === 1">Previous</button>
         <span>Page {{ pagination.page }} of {{ totalPages }}</span>
-        <button @click="nextPage" :disabled="pagination.page === totalPages">Next</button>
+        <button @click="nextPage" :disabled="pagination.page === totalPages()">Next</button>
       </div>
     </div>
   </template>
@@ -166,13 +166,13 @@
     name: "CourseComponent",
     computed: {
       ...mapState("course", ['courses', 'newCourse', 'pagination', 'editedCourse']),
-      ...mapGetters("course", ['totalPages']),
     },
     created() {
       this.fetchCourses();
     },
     methods: {
       ...mapActions("course", ['fetchCourses', 'addNewCourse', 'deleteCourse', 'updateCourse']),
+      ...mapGetters("course", ['totalPages']),
 
       editCourse(course) {
         course.editing = true;

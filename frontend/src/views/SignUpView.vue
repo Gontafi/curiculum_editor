@@ -2,22 +2,7 @@
 <template>
     <div>
       <HomeHeaderVue></HomeHeaderVue>
-      <div class="login-back">
-        <div class="login-page">
-          <h2>Sign Up</h2>
-          <form @submit.prevent="signup">
-            <div class="form-group">
-              <label for="username">Username:</label>
-              <input type="text" id="username" v-model="username" required>
-            </div>
-            <div class="form-group">
-              <label for="password">Password:</label>
-              <input type="password" id="password" v-model="password" required>
-            </div>
-            <button type="submit">Sign Up</button>
-          </form>
-        </div>
-      </div>
+      <SignUp></SignUp>
     </div>
   </template>
 <!-- eslint-disable -->  
@@ -25,10 +10,12 @@
 
 import axios from "axios";
 import HomeHeaderVue from "@/components/HomeHeader.vue";
+import SignUp from "@/components/RegistratingComponent.vue"
 export default {
 name: "SignupView",
 components: {
     HomeHeaderVue,
+    SignUp,
 },
 data() {
     return {
