@@ -15,7 +15,7 @@ func (r *Repository) GetAllModules(ctx context.Context, limit int, offset int) (
 	}
 
 	var modulesFromDB []models.Module
-	err = r.db.Limit(limit).Offset(offset).Find(&modulesFromDB).Error
+	err = r.db.Preload("Cycle").Limit(limit).Offset(offset).Find(&modulesFromDB).Error
 	if err != nil {
 		return nil, err
 	}

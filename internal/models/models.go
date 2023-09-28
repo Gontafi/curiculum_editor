@@ -10,7 +10,7 @@ type Role struct {
 	Name     string `gorm:"not null"`
 	StatusID int    `gorm:"type:smallint;default:1;check:status_id = 0 OR status_id = 1"`
 
-	Users []User `gorm:"foreignKey:RoleID"`
+	Users []User `gorm:"foreignKey:RoleID" json:"users"`
 }
 
 type User struct {
@@ -22,7 +22,7 @@ type User struct {
 	CreatedAt    time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt    time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 
-	Role Role `gorm:"foreignKey:RoleID"`
+	Role Role `gorm:"foreignKey:RoleID" json:"role"`
 }
 
 type ProfessionalComponent struct {
@@ -34,7 +34,7 @@ type ProfessionalComponent struct {
 	DescriptionRu string      `gorm:"column:description_ru;not null" json:"description_ru"`
 	DescriptionEn string      `gorm:"column:description_en;not null" json:"description_en"`
 	Order         int         `gorm:"column:order;not null" json:"order"`
-	Components    []Component `gorm:"foreignKey:ProfID" json:"-"`
+	Components    []Component `gorm:"foreignKey:ProfID" json:"components"`
 }
 
 type Component struct {
@@ -47,7 +47,7 @@ type Component struct {
 	DescriptionRu         string                `gorm:"column:description_ru;not null" json:"description_ru"`
 	DescriptionEn         string                `gorm:"column:description_en;not null" json:"description_en"`
 	Order                 int                   `gorm:"column:order;not null" json:"order"`
-	ProfessionalComponent ProfessionalComponent `gorm:"foreignKey:ProfID"`
+	ProfessionalComponent ProfessionalComponent `gorm:"foreignKey:ProfID" json:"professional_component"`
 }
 
 type Module struct {
@@ -57,7 +57,7 @@ type Module struct {
 	NameRu string `gorm:"column:name_ru;not null" json:"name_ru"`
 	NameEn string `gorm:"column:name_en;not null" json:"name_en"`
 
-	Cycles []Cycle `gorm:"foreignKey:ModuleID"`
+	Cycles []Cycle `gorm:"foreignKey:ModuleID" json:"cycles"`
 }
 
 type Cycle struct {
@@ -67,7 +67,7 @@ type Cycle struct {
 	CodeRu   string `gorm:"column:code_ru;not null" json:"code_ru"`
 	CodeEn   string `gorm:"column:code_en;not null" json:"code_en"`
 
-	Module Module `gorm:"foreignKey:ModuleID"`
+	Module Module `gorm:"foreignKey:ModuleID" json:"module"`
 }
 
 type Department struct {
@@ -100,10 +100,10 @@ type Course struct {
 	LabHour                 int    `gorm:"column:lab_hour;not null" json:"lab_hour"`
 	SROHour                 int    `gorm:"column:sro_hour;not null" json:"sro_hour"`
 
-	Module                Module                `gorm:"foreignKey:ModuleID"`
-	Department            Department            `gorm:"foreignKey:DepartmentID"`
-	ProfessionalComponent ProfessionalComponent `gorm:"foreignKey:ProfessionalComponentID"`
-	Prerequisites         []CoursePrerequisite  `gorm:"foreignKey:CourseID"`
+	Module                Module                `gorm:"foreignKey:ModuleID" json:"module"`
+	Department            Department            `gorm:"foreignKey:DepartmentID" json:"department"`
+	ProfessionalComponent ProfessionalComponent `gorm:"foreignKey:ProfessionalComponentID" json:"professional_component"`
+	Prerequisites         []CoursePrerequisite  `gorm:"foreignKey:CourseID" json:"prerequisites"`
 }
 
 type CoursePrerequisite struct {
@@ -111,8 +111,8 @@ type CoursePrerequisite struct {
 	CourseID       int `gorm:"column:course_id;not null" json:"course_id"`
 	PrerequisiteID int `gorm:"column:prerequisite_id;not null" json:"prerequisite_id"`
 
-	Course       Course `gorm:"foreignKey:CourseID"`
-	Prerequisite Course `gorm:"foreignKey:PrerequisiteID"`
+	Course       Course `gorm:"foreignKey:CourseID" json:"course"`
+	Prerequisite Course `gorm:"foreignKey:PrerequisiteID" json:"prerequisite"`
 }
 
 type TotalLearningCourse struct {
@@ -124,8 +124,8 @@ type SemesterCourse struct {
 	SemesterID int `gorm:"column:semester_id;not null" json:"semester_id"`
 	CourseID   int `gorm:"column:course_id;not null" json:"course_id"`
 
-	Course   Course   `gorm:"foreignKey:course_id"`
-	Semester Semester `gorm:"foreignKey:semester_id"`
+	Course   Course   `gorm:"foreignKey:course_id" json:"course"`
+	Semester Semester `gorm:"foreignKey:semester_id" json:"semester"`
 }
 type Semester struct {
 	ID int `gorm:"primaryKey" json:"id"`
@@ -136,8 +136,8 @@ type TotalCourseSemester struct {
 	TotalLearningCourseID int `gorm:"column:total_learning_course_id;not null" json:"total_learning_course_id"`
 	SemesterID            int `gorm:"column:semester_id;not null" json:"semester_id"`
 
-	TotalLearningCourse TotalLearningCourse `gorm:"foreignKey:TotalLearningCourseID"`
-	Semester            Semester            `gorm:"foreignKey:SemesterID"`
+	TotalLearningCourse TotalLearningCourse `gorm:"foreignKey:TotalLearningCourseID" json:"total_learning_course"`
+	Semester            Semester            `gorm:"foreignKey:SemesterID" json:"semester"`
 }
 
 func AutoMigrate(db *gorm.DB) {

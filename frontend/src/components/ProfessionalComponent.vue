@@ -7,7 +7,6 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>ProfID</th>
             <th>Code KZ</th>
             <th>Code RU</th>
             <th>Code EN</th>
@@ -19,61 +18,56 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(component, index) in filteredComponents" :key="component.id">
+          <tr v-for="(component, index) in filteredProfessionalComponents" :key="component.id">
             <td>
               <span>{{ component.id }}</span>
             </td>
             <td>
-              <span v-if="!component.editing">{{ component.prof_id }}</span>
-              <input v-else v-model="editedComponent.prof_id" />
-            </td>
-            <td>
               <span v-if="!component.editing">{{ component.code_kz }}</span>
-              <input v-else v-model="editedComponent.code_kz" />
+              <input v-else v-model="editedProfessionalComponent.code_kz" />
             </td>
             <td>
               <span v-if="!component.editing">{{ component.code_ru }}</span>
-              <input v-else v-model="editedComponent.code_ru" />
+              <input v-else v-model="editedProfessionalComponent.code_ru" />
             </td>
             <td>
               <span v-if="!component.editing">{{ component.code_en }}</span>
-              <input v-else v-model="editedComponent.code_en" />
+              <input v-else v-model="editedProfessionalComponent.code_en" />
             </td>
             <td>
               <span v-if="!component.editing">{{ component.description_kz }}</span>
-              <input v-else v-model="editedComponent.description_kz" />
+              <input v-else v-model="editedProfessionalComponent.description_kz" />
             </td>
             <td>
               <span v-if="!component.editing">{{ component.description_ru }}</span>
-              <input v-else v-model="editedComponent.description_ru" />
+              <input v-else v-model="editedProfessionalComponent.description_ru" />
             </td>
             <td>
               <span v-if="!component.editing">{{ component.description_en }}</span>
-              <input v-else v-model="editedComponent.description_en" />
+              <input v-else v-model="editedProfessionalComponent.description_en" />
             </td>
             <td>
               <span v-if="!component.editing">{{ component.order }}</span>
-              <input v-else v-model="editedComponent.order" />
+              <input v-else v-model="editedProfessionalComponent.order" />
             </td>
             <td>
               <button @click="editComponent(component)" v-if="!component.editing">Edit</button>
-              <button @click="saveEditedComponent(editedComponent, component)" v-if="component.editing">Submit</button>
+              <button @click="saveeditedProfessionalComponent(editedProfessionalComponent, component)" v-if="component.editing">Submit</button>
               <button @click="cancelEdit(component)" v-if="component.editing">Cancel</button>
-              <button @click="deleteComponent(component.id)" v-if="!component.editing">Delete</button>
+              <button @click="deleteProfessionalComponent(component.id)" v-if="!component.editing">Delete</button>
             </td>
           </tr>
           <tr>
             <td></td>
-            <td><input v-model="newComponent.prof_id" /></td>
-            <td><input v-model="newComponent.code_kz" /></td>
-            <td><input v-model="newComponent.code_ru" /></td>
-            <td><input v-model="newComponent.code_en" /></td>
-            <td><input v-model="newComponent.description_kz" /></td>
-            <td><input v-model="newComponent.description_ru" /></td>
-            <td><input v-model="newComponent.description_en" /></td>
-            <td><input v-model="newComponent.order" /></td>
+            <td><input v-model="newProfessionalComponent.code_kz" /></td>
+            <td><input v-model="newProfessionalComponent.code_ru" /></td>
+            <td><input v-model="newProfessionalComponent.code_en" /></td>
+            <td><input v-model="newProfessionalComponent.description_kz" /></td>
+            <td><input v-model="newProfessionalComponent.description_ru" /></td>
+            <td><input v-model="newProfessionalComponent.description_en" /></td>
+            <td><input v-model="newProfessionalComponent.order" /></td>
             <td>
-              <button @click="addNewComponent">Add</button>
+              <button @click="addnewProfessionalComponent">Add</button>
             </td>
           </tr>
         </tbody>
@@ -81,7 +75,7 @@
     </div>
     <div class="pagination">
       <button @click="prevPage" :disabled="pagination.page === 1">Previous</button>
-      <span>Page {{ pagination.page }} of {{ totalPages() }}</span>
+      <span>Page {{ pagination.page }} of {{ totalPages }}</span>
       <button @click="nextPage" :disabled="pagination.page === totalPages">Next</button>
     </div>
   </div>
@@ -89,31 +83,31 @@
 <!-- eslint-disable -->
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
+
 export default {
-  name: "ComponentComponent",
+  name: 'ComponentComponent',
   computed: {
-    ...mapState("courseComponent",['filteredComponents', 'newComponent', "pagination", "editedComponent"]),
+    ...mapState('courseProfessionalComponent', ['filteredProfessionalComponents', 'newProfessionalComponent', 'pagination', 'editedProfessionalComponent']),
   },
   created() {
-    this.fetchComponents();
+    this.fetchProfessionalComponents();
   },
   methods: {
-     ...mapActions("courseComponent", ['fetchComponents', 'addNewComponent', 'deleteComponent', 'updateComponent']),
-     ...mapGetters("courseComponent", ['totalPages', "allFilteredComponents"]),
+    ...mapActions('courseProfessionalComponent', ['fetchProfessionalComponents', 'addnewProfessionalComponent', 'deleteProfessionalComponent', 'updateProfessionalComponent']),
+    ...mapGetters('courseProfessionalComponent', ['totalPages', 'allfilteredProfessionalComponents']),
     editComponent(component) {
       component.editing = true;
-      this.editedComponent.id = String(component.id);
-      this.editedComponent.prof_id = component.prof_id;
-      this.editedComponent.code_en = component.code_en;
-      this.editedComponent.code_kz = component.code_kz;
-      this.editedComponent.code_ru = component.code_ru;
-      this.editedComponent.description_en = component.description_en;
-      this.editedComponent.description_kz = component.description_kz;
-      this.editedComponent.description_ru = component.description_ru;
-      this.editedComponent.order = String(component.order);
+      this.editedProfessionalComponent.id = String(component.id);
+      this.editedProfessionalComponent.code_en = component.code_en;
+      this.editedProfessionalComponent.code_kz = component.code_kz;
+      this.editedProfessionalComponent.code_ru = component.code_ru;
+      this.editedProfessionalComponent.description_en = component.description_en;
+      this.editedProfessionalComponent.description_kz = component.description_kz;
+      this.editedProfessionalComponent.description_ru = component.description_ru;
+      this.editedProfessionalComponent.order = String(component.order);
     },
-    saveEditedComponent(component, currentComponent) {
-      this.updateComponent(component);
+    saveeditedProfessionalComponent(component, currentComponent) {
+      this.updateProfessionalComponent(component);
       this.cancelEdit(currentComponent);
     },
     cancelEdit(component) {
@@ -122,20 +116,20 @@ export default {
     prevPage() {
       if (this.pagination.page > 1) {
         this.pagination.page--;
-        this.fetchComponents();
+        this.fetchProfessionalComponents();
       }
     },
     nextPage() {
       if (this.pagination.page < this.totalPages) {
         this.pagination.page++;
-        this.fetchComponents();
+        this.fetchProfessionalComponents();
       }
     },
   },
 };
 </script>
 <!-- eslint-disable -->
-<style>
+<style scoped>
 .container {
   max-width: 1200px;
   margin: 0 auto;

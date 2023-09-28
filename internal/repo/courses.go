@@ -15,7 +15,7 @@ func (r *Repository) GetAllCourses(ctx context.Context, limit int, offset int) (
 	}
 
 	var coursesFromDB []models.Course
-	err = r.db.Limit(limit).Offset(offset).Find(&coursesFromDB).Error
+	err = r.db.Preload("Module").Preload("Department").Preload("ProfessionalComponent").Preload("Prerequisites").Limit(limit).Offset(offset).Find(&coursesFromDB).Error
 	if err != nil {
 		return nil, err
 	}

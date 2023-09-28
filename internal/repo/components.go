@@ -15,7 +15,7 @@ func (r *Repository) GetAllComponents(ctx context.Context, limit int, offset int
 	}
 
 	var componentsFromDB []models.Component
-	err = r.db.Limit(limit).Offset(offset).Find(&componentsFromDB).Error
+	err = r.db.Preload("ProfessionalComponent").Limit(limit).Offset(offset).Find(&componentsFromDB).Error
 	if err != nil {
 		return nil, err
 	}

@@ -4,7 +4,7 @@ import "educational_program_creator/internal/models"
 
 func (r *Repository) GetAllProfessionalComponents(limit int, offset int) ([]models.ProfessionalComponent, error) {
 	var professionalComponents []models.ProfessionalComponent
-	err := r.db.Limit(limit).Offset(offset).Find(&professionalComponents).Error
+	err := r.db.Preload("Components").Limit(limit).Offset(offset).Find(&professionalComponents).Error
 	if err != nil {
 		return nil, err
 	}

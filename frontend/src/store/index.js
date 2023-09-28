@@ -1,12 +1,20 @@
 /* eslint-disable */
 import { createStore } from "vuex";
 import courseModule from "./module/courseModule";
-import courseComponent from "./module/courseComponent";
+import courseProfessionalComponent from "./module/professtionalComponent";
 import auth from "./module/auth";
+import courseComponent from "./module/component";
+import department from "./module/department"
+import course from "./module/course";
+import cycles from "./module/cycles";
 export default createStore({
   modules: {
     courseModule,
     courseComponent,
+    courseProfessionalComponent,
+    course,
+    department,
     auth,
+    cycles,
   },
 });

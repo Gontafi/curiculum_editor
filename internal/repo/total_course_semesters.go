@@ -4,7 +4,7 @@ import "educational_program_creator/internal/models"
 
 func (r *Repository) GetAllTotalCourseSemesters(limit int, offset int) ([]models.TotalCourseSemester, error) {
 	var totalCourseSemesters []models.TotalCourseSemester
-	err := r.db.Limit(limit).Offset(offset).Find(&totalCourseSemesters).Error
+	err := r.db.Preload("Course").Preload("Semester").Limit(limit).Offset(offset).Find(&totalCourseSemesters).Error
 	if err != nil {
 		return nil, err
 	}

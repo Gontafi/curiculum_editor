@@ -3,7 +3,7 @@
     <div>
       <v-app>
         <!-- Navigation Drawer -->
-        <v-navigation-drawer app>
+        <v-navigation-drawer v-bind:width="230" app>
           <v-list dense>
             <v-list-item v-for="(item, index) in items" :key="index" @click="changeTab(index)">
               <v-list-item-action>
@@ -33,7 +33,19 @@
           <!-- Content for each tab goes here -->
           <v-container>
             <v-row v-if="currentTab.name === 'ProfessionalComponent'"> <!-- Add similar blocks for other models -->
+                <ProfessionalComponent></ProfessionalComponent>
+            </v-row>
+            <v-row v-if="currentTab.name === 'ComponentComponent'"> <!-- Add similar blocks for other models -->
                 <ComponentComponent></ComponentComponent>
+            </v-row>
+            <v-row v-if="currentTab.name === 'Department'"> <!-- Add similar blocks for other models -->
+                <Departments></Departments>
+            </v-row>
+            <v-row v-if="currentTab.name === 'Course'"> <!-- Add similar blocks for other models -->
+                <Course></Course>
+            </v-row>
+            <v-row v-if="currentTab.name === 'Cycle'"> <!-- Add similar blocks for other models -->
+                <Cycles></Cycles>
             </v-row>
             <v-row v-if="currentTab.name === 'Module'"> <!-- Add similar blocks for other models -->
                 <ModuleComponent></ModuleComponent>
@@ -58,18 +70,27 @@
 <!-- eslint-disable -->
 <script>
 import ComponentComponent from "@/components/ComponentComponent.vue"
+import ProfessionalComponent from "@/components/ProfessionalComponent.vue";
+import Course from "@/components/Course.vue";
+import Departments from "@/components/Departments.vue";
 import ModuleComponent from "@/components/ModuleComponent.vue";
+import Cycles from "@/components/Cycles.vue";
 
   export default {
     name: "DashboardView",
     components: {
+      ProfessionalComponent,
     ComponentComponent,
-    ModuleComponent
+    ModuleComponent,
+    Departments,
+    Cycles,
+    Course
 },
     data() {
       return {
         items: [
-          { text: "Components", name: "ProfessionalComponent", icon: "mdi-view-module" },
+          { text: "ProfessionalComponent", name: "ProfessionalComponent", icon: "mdi-view-module" },
+          { text: "Components", name: "ComponentComponent", icon: "mdi-view-module" },
           { text: "Courses", name: "Course", icon: "mdi-school" },
           { text: "Cycles", name: "Cycle", icon: "mdi-refresh" },
           { text: "Departments", name: "Department", icon: "mdi-bank" },

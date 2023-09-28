@@ -4,7 +4,7 @@ import "educational_program_creator/internal/models"
 
 func (r *Repository) GetTotalLearningCourseByID(id int) (*models.TotalLearningCourse, error) {
 	var totalLearningCourse models.TotalLearningCourse
-	err := r.db.First(&totalLearningCourse, id).Error
+	err := r.db.Preload("TotalLearningCourse").Preload("Semester").First(&totalLearningCourse, id).Error
 	if err != nil {
 		return nil, err
 	}

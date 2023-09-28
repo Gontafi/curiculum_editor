@@ -1,20 +1,10 @@
 /* eslint-disable */
 export default {
     namespaced: true,
-    name:"courseComponent",
+    name:"courseProfessionalComponent",
     state: {
-      newModule: {
-        id: '0',
-        code: '',           
-        name_kz: '',        
-        name_ru: '',        
-        name_en: '',        
-      },
-        filteredComponents: [],
-        currentComponent: {
-          editing: false,
-        },
-        newComponent: {
+        filteredProfessionalComponents: [],
+        newProfessionalComponent: {
           id: '0',
           code_kz: '',           
           code_ru: '',           
@@ -24,7 +14,7 @@ export default {
           description_en: '',    
           order: '0',            
         },
-        editedComponent: {
+        editedProfessionalComponent: {
           id: '0',
           code_kz: '',           
           code_ru: '',           
@@ -40,14 +30,14 @@ export default {
         },
       },
       mutations: {
-        SET_FILTERED_COMPONENTS(state, filteredComponents) {
-          state.filteredComponents = filteredComponents;
+        SET_FILTERED_PROFESSIONAL_COMPONENTS(state, filteredProfessionalComponents) {
+          state.filteredProfessionalComponents = filteredProfessionalComponents;
         },
-        ADD_COMPONENT(state, component) {
-          state.filteredComponents.push(component);
+        ADD_PROFESSIONAL_COMPONENT(state, component) {
+          state.filteredProfessionalComponents.push(component);
         },
-        CLEAR_NEW_COMPONENT(state) {
-          state.newComponent = {
+        CLEAR_NEW_PROFESSIONAL_COMPONENT(state) {
+          state.newProfessionalComponent = {
             id: '0',
             code_kz: '',        
             code_ru: '',        
@@ -58,18 +48,18 @@ export default {
             order: '0',         
           };
         },
-        EDIT_COMPONENT(state, editedComponent) {
-            const index = state.filteredComponents.findIndex((c) => String(c.id) === editedComponent.id);
+        EDIT_PROFESSIONAL_COMPONENT(state, editedProfessionalComponent) {
+            const index = state.filteredProfessionalComponents.findIndex((c) => String(c.id) === editedProfessionalComponent.id);
             if (index !== -1) {
-              state.filteredComponents[index] = editedComponent;
+              state.filteredProfessionalComponents[index] = editedProfessionalComponent;
             }
           },
-        DELETE_COMPONENT(state, componentId) {
-            state.filteredComponents = state.filteredComponents.filter((c) => c.id !== componentId);
+        DELETE_PROFESSIONAL_COMPONENT(state, componentId) {
+            state.filteredProfessionalComponents = state.filteredProfessionalComponents.filter((c) => c.id !== componentId);
         },
       },
       actions: {
-        async fetchComponents({ commit, state }) {
+        async fetchProfessionalComponents({ commit, state }) {
           try {
             const response = await fetch(`http://localhost:8080/api/professional-component?page=${state.pagination.page}&perPage=${state.pagination.itemsPerPage}`, {
               method: "GET",
@@ -78,12 +68,12 @@ export default {
               throw new Error('Failed to fetch components');
             }
             const components = await response.json();
-            commit('SET_FILTERED_COMPONENTS', components);
+            commit('SET_FILTERED_PROFESSIONAL_COMPONENTS', components);
           } catch (error) {
             console.error('Error fetching components:', error);
           }
         },
-        async addNewComponent({ commit, state }) {
+        async addnewProfessionalComponent({ commit, state }) {
           try {
             const response = await fetch('http://localhost:8080/api/professional-component', {
               method: 'POST',
@@ -91,30 +81,30 @@ export default {
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
               },
-              body: JSON.stringify(state.newComponent),
+              body: JSON.stringify(state.newProfessionalComponent),
             });
     
             if (!response.ok) {
               throw new Error('Failed to add a new component');
             }
     
-            const newComponent = await response.json();
-            state.newComponent.id = newComponent.id;
-            commit('ADD_COMPONENT', state.newComponent);
-            commit('CLEAR_NEW_COMPONENT');
+            const newProfessionalComponent = await response.json();
+            state.newProfessionalComponent.id = newProfessionalComponent.id;
+            commit('ADD_PROFESSIONAL_COMPONENT', state.newProfessionalComponent);
+            commit('CLEAR_NEW_PROFESSIONAL_COMPONENT');
           } catch (error) {
             console.error('Error adding a new component:', error);
           }
         },
-        async updateComponent({ commit }, editedComponent) {
+        async updateProfessionalComponent({ commit }, editedProfessionalComponent) {
             try {
-              const response = await fetch(`http://localhost:8080/api/professional-component/${editedComponent.id}`, {
+              const response = await fetch(`http://localhost:8080/api/professional-component/${editedProfessionalComponent.id}`, {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
                   "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(editedComponent),
+                body: JSON.stringify(editedProfessionalComponent),
     
               });
         
@@ -122,12 +112,12 @@ export default {
                 throw new Error('Failed to edit the component');
               }
         
-              commit('EDIT_COMPONENT', editedComponent);
+              commit('EDIT_PROFESSIONAL_COMPONENT', editedProfessionalComponent);
             } catch (error) {
               console.error('Error editing the component:', error);
             }
           },
-          async deleteComponent({ commit }, componentId) {
+          async deleteProfessionalComponent({ commit }, componentId) {
             try {
               const response = await fetch(`http://localhost:8080/api/professional-component/${componentId}`, {
                 method: 'DELETE',
@@ -140,18 +130,19 @@ export default {
                 throw new Error('Failed to delete the component');
               }
         
-              commit('DELETE_COMPONENT', componentId);
+              commit('DELETE_PROFESSIONAL_COMPONENT', componentId);
             } catch (error) {
               console.error('Error deleting the component:', error);
             }
           },
       },
       getters: {
-        allFilteredComponents: (state) => {
-          return state.filteredComponents;
+        allfilteredProfessionalComponents: (state) => {
+          return state.filteredProfessionalComponents;
         },
         totalPages: (state) => {
-          return Math.ceil(state.filteredComponents.length / state.pagination.itemsPerPage);
+          return Math.ceil(state.filteredProfessionalComponents.length / state.pagination.itemsPerPage);
         },
       },
 };
+

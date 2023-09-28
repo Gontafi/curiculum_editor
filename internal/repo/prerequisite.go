@@ -4,7 +4,7 @@ import "educational_program_creator/internal/models"
 
 func (r *Repository) GetAllCoursePrerequisite(limit int, offset int) ([]models.CoursePrerequisite, error) {
 	var prerequisites []models.CoursePrerequisite
-	err := r.db.Limit(limit).Offset(offset).Find(&prerequisites).Error
+	err := r.db.Preload("Course").Preload("Prerequisite").Limit(limit).Offset(offset).Find(&prerequisites).Error
 	if err != nil {
 		return nil, err
 	}
