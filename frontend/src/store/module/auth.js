@@ -8,7 +8,8 @@ export default {
       credentials: {
         username: "",
         password: "",
-      }
+      },
+      loading:false,
     },
     
   mutations: {
@@ -18,28 +19,42 @@ export default {
     clearAccessToken(state) {
       state.accessToken = null;
     },
+    setLoading(state, bool) {
+      state.loading = bool;
+    }
   },
 
   actions: {
-    async login({state, commit}) {
+    async login({ state, commit }) {
+      commit("setLoading", true);
+    
       try {
-        const response = await fetch("http://localhost:8080/api/auth/sign-in/", {
+        const response = await Promise.race([
+          fetch("http://localhost:8080/api/auth/sign-in/", {
             method: "POST",
             headers: {
               'Content-Type': 'application/json',
               'Access-Control-Allow-Origin': '*',
             },
             body: JSON.stringify(state.credentials),
-          });
+          }),
+          new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Request timed out')), 5000)
+          ),
+        ]);
+    
         if (!response.ok) {
           throw new Error('Failed to login');
         }
+        
         const res = await response.json();
         localStorage.setItem("jwt", res.access_token);
         commit("setLogin", true);
         router.push('/dashboard');
       } catch (error) {
-        console.error('Error adding while login:', error);
+        console.error('Error while logging in:', error);
+      } finally {
+        commit("setLoading", false);
       }
     },
     async signUp({state}) {
@@ -55,6 +70,7 @@ export default {
         if (!response.ok){
           throw new Error("Failed to register user");
         }
+        router.push('/login');
       } catch(error) {
         console.error("error while trying to registrate", error)
       }

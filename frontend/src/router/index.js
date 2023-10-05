@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import Login from "../views/LoginView.vue";
@@ -41,6 +42,7 @@ function isAuthenticated(){
 
 router.beforeEach(async (to, from, next) => {
   if (to.meta.requiredAuth) {
+    console.log("wat?");
     if (isAuthenticated()){
       return next();
     }
