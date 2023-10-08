@@ -102,11 +102,12 @@ export default {
     actions: {
       async fetchCourses({ commit, state }) {
         try {
+          console.log(state.pagination.page);
           const response = await fetch(
-            `http://localhost:8080/api/course?${state.pagination.page}&perPage=${state.pagination.itemsPerPage}`,
-            {
-              method: 'GET',
-            }
+              `http://localhost:8080/api/course?page=${state.pagination.page}&perPage=${state.pagination.itemsPerPage}`,
+              {
+                method: 'GET',
+              }
           );
           if (!response.ok) {
             throw new Error('Failed to fetch courses');

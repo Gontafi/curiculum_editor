@@ -7,6 +7,7 @@ import courseComponent from "./module/component";
 import department from "./module/department"
 import course from "./module/course";
 import cycles from "./module/cycles";
+import prerequisite from "@/store/module/prerequisite";
 export default createStore({
   modules: {
     courseModule,
@@ -16,5 +17,6 @@ export default createStore({
     department,
     authComponent,
     cycles,
+    prerequisite,
   },
 });

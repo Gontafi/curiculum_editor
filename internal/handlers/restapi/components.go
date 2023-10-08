@@ -23,7 +23,7 @@ func (h *CrudHandler) GetAllComponents(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	components, err := h.Service.GetAllComponents(c.Context(), page, perPage)
+	components, err := h.Service.GetAllComponents(page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve components"})
@@ -38,7 +38,7 @@ func (h *CrudHandler) GetComponentByID(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	component, err := h.Service.GetComponentByID(c.Context(), id)
+	component, err := h.Service.GetComponentByID(id)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve component"})
@@ -69,7 +69,7 @@ func (h *CrudHandler) CreateComponent(c *fiber.Ctx) error {
 		DescriptionEn: inputComponent.DescriptionEn,
 		Order:         inputComponent.Order,
 	}
-	id, err := h.Service.CreateComponent(c.Context(), &component)
+	id, err := h.Service.CreateComponent(&component)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create component"})
@@ -106,7 +106,7 @@ func (h *CrudHandler) UpdateComponent(c *fiber.Ctx) error {
 		Order:         inputComponent.Order,
 	}
 	component.ID = id
-	err = h.Service.UpdateComponent(c.Context(), &component)
+	err = h.Service.UpdateComponent(&component)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update component"})
@@ -122,7 +122,7 @@ func (h *CrudHandler) DeleteComponent(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	err = h.Service.DeleteComponent(c.Context(), id)
+	err = h.Service.DeleteComponent(id)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete component"})

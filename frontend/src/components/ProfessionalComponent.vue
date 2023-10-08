@@ -74,9 +74,9 @@
       </table>
     </div>
     <div class="pagination">
-      <button @click="prevPage" :disabled="pagination.page === 1">Previous</button>
-      <span>Page {{ pagination.page }} of {{ totalPages }}</span>
-      <button @click="nextPage" :disabled="pagination.page === totalPages()">Next</button>
+      <button @click="prevPage">Previous</button>
+      <span>Page {{ pagination.page }}</span>
+      <button @click="nextPage">Next</button>
     </div>
   </div>
 </template>
@@ -114,16 +114,14 @@ export default {
       component.editing = false;
     },
     prevPage() {
-      if (this.pagination.page > 1) {
-        this.pagination.page--;
-        this.fetchProfessionalComponents();
-      }
+      this.pagination.page--;
+      console.log(this.pagination.page);
+      this.fetchProfessionalComponents();
     },
     nextPage() {
-      if (this.pagination.page < this.totalPages) {
-        this.pagination.page++;
-        this.fetchProfessionalComponents();
-      }
+      console.log(this.pagination.page);
+      this.pagination.page++;
+      this.fetchProfessionalComponents();
     },
   },
 };

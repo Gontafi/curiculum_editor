@@ -23,7 +23,7 @@ func (h *CrudHandler) GetAllCourses(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	courses, err := h.Service.GetAllCourses(c.Context(), page, perPage)
+	courses, err := h.Service.GetAllCourses(page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve courses"})
@@ -38,7 +38,7 @@ func (h *CrudHandler) GetCourseByID(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	course, err := h.Service.GetCourseByID(c.Context(), id)
+	course, err := h.Service.GetCourseByID(id)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve course"})
@@ -81,7 +81,7 @@ func (h *CrudHandler) CreateCourse(c *fiber.Ctx) error {
 		SROHour:                 req.SROHour,
 	}
 
-	id, err := h.Service.CreateCourse(c.Context(), &course)
+	id, err := h.Service.CreateCourse(&course)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create course"})
@@ -130,7 +130,7 @@ func (h *CrudHandler) UpdateCourse(c *fiber.Ctx) error {
 		SROHour:                 req.SROHour,
 	}
 
-	if err := h.Service.UpdateCourse(c.Context(), &course); err != nil {
+	if err := h.Service.UpdateCourse(&course); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update course"})
 	}
@@ -145,7 +145,7 @@ func (h *CrudHandler) DeleteCourse(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	if err := h.Service.DeleteCourse(c.Context(), id); err != nil {
+	if err := h.Service.DeleteCourse(id); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete course"})
 	}

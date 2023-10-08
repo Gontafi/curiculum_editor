@@ -152,9 +152,9 @@
         </table>
       </div>
       <div class="pagination">
-        <button @click="prevPage" :disabled="pagination.page === 1">Previous</button>
-        <span>Page {{ pagination.page }} of {{ totalPages }}</span>
-        <button @click="nextPage" :disabled="pagination.page === totalPages()">Next</button>
+        <button @click="prevPage">Previous</button>
+        <span>Page {{ pagination.page }}</span>
+        <button @click="nextPage">Next</button>
       </div>
     </div>
   </template>
@@ -209,17 +209,15 @@
       },
 
       prevPage() {
-        if (this.pagination.page > 1) {
+        if (this.pagination.page !== 1) {
           this.pagination.page--;
           this.fetchCourses();
         }
       },
 
       nextPage() {
-        if (this.pagination.page < this.totalPages) {
-          this.pagination.page++;
-          this.fetchCourses();
-        }
+        this.pagination.page++;
+        this.fetchCourses();
       },
     },
   };

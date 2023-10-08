@@ -23,7 +23,7 @@ func (h *CrudHandler) GetAllDepartments(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	departments, err := h.Service.GetAllDepartments(c.Context(), page, perPage)
+	departments, err := h.Service.GetAllDepartments(page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve departments"})
@@ -38,7 +38,7 @@ func (h *CrudHandler) GetDepartmentByID(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	department, err := h.Service.GetDepartmentByID(c.Context(), id)
+	department, err := h.Service.GetDepartmentByID(id)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve department"})
@@ -64,7 +64,7 @@ func (h *CrudHandler) CreateDepartment(c *fiber.Ctx) error {
 		DescriptionEn: req.DescriptionEn,
 	}
 
-	id, err := h.Service.CreateDepartment(c.Context(), &department)
+	id, err := h.Service.CreateDepartment(&department)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create department"})
@@ -96,7 +96,7 @@ func (h *CrudHandler) UpdateDepartment(c *fiber.Ctx) error {
 		DescriptionEn: req.DescriptionEn,
 	}
 
-	if err := h.Service.UpdateDepartment(c.Context(), &department); err != nil {
+	if err := h.Service.UpdateDepartment(&department); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update department"})
 	}
@@ -111,7 +111,7 @@ func (h *CrudHandler) DeleteDepartment(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	if err := h.Service.DeleteDepartment(c.Context(), id); err != nil {
+	if err := h.Service.DeleteDepartment(id); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete department"})
 	}

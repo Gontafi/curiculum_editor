@@ -13,6 +13,6 @@ func NewDB(cfg *config.AppConfig) (*gorm.DB, error) {
 		return nil, err
 	}
 	models.AutoMigrate(db)
-
+	//TODO PSQL
 	return db, nil
 }

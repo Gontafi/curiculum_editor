@@ -1,94 +1,89 @@
 /* eslint-disable */
 export default {
   namespaced: true,
+  name:"courseComponent",
   state: {
-    name:"courseComponent",
-    components: [],
-    currentComponent: {
-      editing: false,
-    },
+    filteredComponents: [],
     newComponent: {
       id: '0',
-      prof_id: '0',
+      prof_id: 0,
       code_kz: '',
       code_ru: '',
       code_en: '',
       description_kz: '',
       description_ru: '',
       description_en: '',
-      order: 0,
+      order: '0',
     },
     editedComponent: {
       id: '0',
-      prof_id: '0',
+      prof_id: 0,
       code_kz: '',
       code_ru: '',
       code_en: '',
       description_kz: '',
       description_ru: '',
       description_en: '',
-      order: 0,
+      order: '0',
     },
     pagination: {
       page: 1,
-      itemsPerPage: 10,
+      itemsPerPage: 10, // You can adjust the number of items per page
     },
   },
   mutations: {
-    SET_COMPONENTS(state, components) {
-      state.components = components;
+    SET_FILTERED_COMPONENTS(state, filteredComponents) {
+      state.filteredComponents = filteredComponents;
     },
     ADD_COMPONENT(state, component) {
-      state.components.push(component);
+      state.filteredComponents.push(component);
     },
     CLEAR_NEW_COMPONENT(state) {
       state.newComponent = {
         id: '0',
-        prof_id: '0',
+        prof_id: 0,
         code_kz: '',
         code_ru: '',
         code_en: '',
         description_kz: '',
         description_ru: '',
         description_en: '',
-        order: 0,
+        order: '0',
       };
     },
     EDIT_COMPONENT(state, editedComponent) {
-      const index = state.components.findIndex((c) => String(c.id) === editedComponent.id);
+      const index = state.filteredComponents.findIndex((c) => String(c.id) === editedComponent.id);
       if (index !== -1) {
-        state.components[index] = editedComponent;
+        state.filteredComponents[index] = editedComponent;
       }
     },
     DELETE_COMPONENT(state, componentId) {
-      state.components = state.components.filter((c) => c.id !== componentId);
+      state.filteredComponents = state.filteredComponents.filter((c) => c.id !== componentId);
     },
   },
   actions: {
     async fetchComponents({ commit, state }) {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/component?${state.pagination.page}&perPage=${state.pagination.itemsPerPage}`,
-          {
-            method: 'GET',
-          }
-        );
+        const response = await fetch(`http://localhost:8080/api/component?page=${state.pagination.page}&perPage=${state.pagination.itemsPerPage}`, {
+          method: "GET",
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch components');
         }
         const components = await response.json();
-        commit('SET_COMPONENTS', components);
+        commit('SET_FILTERED_COMPONENTS', components);
       } catch (error) {
         console.error('Error fetching components:', error);
       }
     },
     async addNewComponent({ commit, state }) {
       try {
+        state.newComponent.prof_id = parseInt(state.newComponent.prof_id)
         const response = await fetch('http://localhost:8080/api/component', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify(state.newComponent),
         });
@@ -107,13 +102,15 @@ export default {
     },
     async updateComponent({ commit }, editedComponent) {
       try {
+        editedComponent.prof_id = parseInt(editedComponent.prof_id)
         const response = await fetch(`http://localhost:8080/api/component/${editedComponent.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify(editedComponent),
+
         });
 
         if (!response.ok) {
@@ -130,7 +127,7 @@ export default {
         const response = await fetch(`http://localhost:8080/api/component/${componentId}`, {
           method: 'DELETE',
           headers: {
-            'Access-Control-Allow-Origin': '*',
+            "Access-Control-Allow-Origin": "*",
           },
         });
 
@@ -145,11 +142,12 @@ export default {
     },
   },
   getters: {
-    allComponents: (state) => {
-      return state.components;
+    allFilteredComponents: (state) => {
+      return state.filteredComponents;
     },
     totalPages: (state) => {
-      return Math.ceil(state.components.length / state.pagination.itemsPerPage);
+      return Math.ceil(state.filteredComponents.length / state.pagination.itemsPerPage);
     },
   },
 };
+

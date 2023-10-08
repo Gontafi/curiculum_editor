@@ -23,7 +23,7 @@ func (h *CrudHandler) GetAllCycles(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	cycles, err := h.Service.GetAllCycles(c.Context(), page, perPage)
+	cycles, err := h.Service.GetAllCycles(page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve cycles"})
@@ -38,7 +38,7 @@ func (h *CrudHandler) GetCycleByID(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	cycle, err := h.Service.GetCycleByID(c.Context(), id)
+	cycle, err := h.Service.GetCycleByID(id)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve cycle"})
@@ -65,7 +65,7 @@ func (h *CrudHandler) CreateCycle(c *fiber.Ctx) error {
 		CodeEn:   req.CodeEn,
 	}
 
-	id, err := h.Service.CreateCycle(c.Context(), &cycle)
+	id, err := h.Service.CreateCycle(&cycle)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create cycle"})
@@ -98,7 +98,7 @@ func (h *CrudHandler) UpdateCycle(c *fiber.Ctx) error {
 		CodeEn:   req.CodeEn,
 	}
 
-	if err := h.Service.UpdateCycle(c.Context(), &cycle); err != nil {
+	if err := h.Service.UpdateCycle(&cycle); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update cycle"})
 	}
@@ -113,7 +113,7 @@ func (h *CrudHandler) DeleteCycle(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	if err := h.Service.DeleteCycle(c.Context(), id); err != nil {
+	if err := h.Service.DeleteCycle(id); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete cycle"})
 	}

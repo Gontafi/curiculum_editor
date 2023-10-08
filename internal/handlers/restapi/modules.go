@@ -23,7 +23,7 @@ func (h *CrudHandler) GetAllModules(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	modules, err := h.Service.GetAllModules(c.Context(), page, perPage)
+	modules, err := h.Service.GetAllModules(page, perPage)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve modules"})
@@ -38,7 +38,7 @@ func (h *CrudHandler) GetModuleByID(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	module, err := h.Service.GetModuleByID(c.Context(), id)
+	module, err := h.Service.GetModuleByID(id)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to retrieve module"})
@@ -65,7 +65,7 @@ func (h *CrudHandler) CreateModule(c *fiber.Ctx) error {
 		NameEn: req.NameEn,
 	}
 
-	id, err := h.Service.CreateModule(c.Context(), &module)
+	id, err := h.Service.CreateModule(&module)
 	if err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to create module"})
@@ -98,7 +98,7 @@ func (h *CrudHandler) UpdateModule(c *fiber.Ctx) error {
 		NameEn: req.NameEn,
 	}
 
-	if err := h.Service.UpdateModule(c.Context(), &module); err != nil {
+	if err := h.Service.UpdateModule(&module); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to update module"})
 	}
@@ -113,7 +113,7 @@ func (h *CrudHandler) DeleteModule(c *fiber.Ctx) error {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{"error": "Invalid input"})
 	}
 
-	if err := h.Service.DeleteModule(c.Context(), id); err != nil {
+	if err := h.Service.DeleteModule(id); err != nil {
 		log.Println(err)
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Failed to delete module"})
 	}

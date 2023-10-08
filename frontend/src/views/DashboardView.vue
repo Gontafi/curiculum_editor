@@ -50,6 +50,9 @@
             <v-row v-if="currentTab.name === 'Module'"> <!-- Add similar blocks for other models -->
                 <ModuleComponent></ModuleComponent>
             </v-row>
+            <v-row v-if="currentTab.name === 'Prerequisite'"> <!-- Add similar blocks for other models -->
+              <PrerequisiteComponent></PrerequisiteComponent>
+            </v-row>
           </v-container>
         </v-main>
         <v-dialog v-model="logoutDialog" max-width="400">
@@ -75,6 +78,7 @@ import Course from "@/components/Course.vue";
 import Departments from "@/components/Departments.vue";
 import ModuleComponent from "@/components/ModuleComponent.vue";
 import Cycles from "@/components/Cycles.vue";
+import PrerequisiteComponent from "@/components/PrerequisiteComponent.vue";
 import store from "@/store/index.js";
   export default {
     name: "DashboardView",
@@ -84,17 +88,19 @@ import store from "@/store/index.js";
     ModuleComponent,
     Departments,
     Cycles,
-    Course
+    Course,
+      PrerequisiteComponent,
 },
     data() {
       return {
         items: [
           { text: "ProfessionalComponent", name: "ProfessionalComponent", icon: "mdi-view-module" },
           { text: "Components", name: "ComponentComponent", icon: "mdi-view-module" },
-          { text: "Courses", name: "Course", icon: "mdi-school" },
+          { text: "Modules", name: "Module", icon: "mdi-library" },
           { text: "Cycles", name: "Cycle", icon: "mdi-refresh" },
           { text: "Departments", name: "Department", icon: "mdi-bank" },
-          { text: "Modules", name: "Module", icon: "mdi-library" },
+          { text: "Courses", name: "Course", icon: "mdi-school" },
+          { text: "Prerequisite", name: "Prerequisite", icon: "mdi-library"},
           { text: "Semester", name: "Semester", icon: "mdi-library" },
           { text: "Curiculum", name: "Curiculum", icon: "mdi-library" },
         ],

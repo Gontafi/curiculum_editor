@@ -19,8 +19,7 @@ func NewServer(cfg *config.AppConfig) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	redisClient := db.NewRedisClient(cfg)
-	repository := repo.NewRepository(gdb, redisClient)
+	repository := repo.NewRepository(gdb)
 	service := services.NewService(repository)
 	handler := handlers.NewHandler(
 		restapi.NewCrudHandler(service),
