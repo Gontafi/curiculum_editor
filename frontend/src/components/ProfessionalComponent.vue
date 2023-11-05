@@ -1,20 +1,20 @@
 <!-- eslint-disable -->
 <template>
   <div class="container">
-    <h2>Manage Components</h2>
+    <h2>Управление Профессиональными компонентами</h2>
     <div class="table-container">
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Code KZ</th>
-            <th>Code RU</th>
-            <th>Code EN</th>
-            <th>Description KZ</th>
-            <th>Description RU</th>
-            <th>Description EN</th>
-            <th>Order</th>
-            <th>Actions</th>
+            <th>Код KZ</th>
+            <th>Код RU</th>
+            <th>Код EN</th>
+            <th>Описание KZ</th>
+            <th>Описание RU</th>
+            <th>Описание EN</th>
+            <th>Порядок</th>
+            <th>Действия</th>
           </tr>
         </thead>
         <tbody>
@@ -51,10 +51,10 @@
               <input v-else v-model="editedProfessionalComponent.order" />
             </td>
             <td>
-              <button @click="editComponent(component)" v-if="!component.editing">Edit</button>
-              <button @click="saveeditedProfessionalComponent(editedProfessionalComponent, component)" v-if="component.editing">Submit</button>
-              <button @click="cancelEdit(component)" v-if="component.editing">Cancel</button>
-              <button @click="deleteProfessionalComponent(component.id)" v-if="!component.editing">Delete</button>
+              <button @click="editComponent(component)" v-if="!component.editing">Изменить</button>
+              <button @click="saveeditedProfessionalComponent(editedProfessionalComponent, component)" v-if="component.editing">Сохранить</button>
+              <button @click="cancelEdit(component)" v-if="component.editing">Отмена</button>
+              <button @click="deleteProfessionalComponent(component.id)" v-if="!component.editing">Удалить</button>
             </td>
           </tr>
           <tr>
@@ -67,7 +67,7 @@
             <td><input v-model="newProfessionalComponent.description_en" /></td>
             <td><input v-model="newProfessionalComponent.order" /></td>
             <td>
-              <button @click="addnewProfessionalComponent">Add</button>
+              <button @click="addnewProfessionalComponent">Добавить</button>
             </td>
           </tr>
         </tbody>

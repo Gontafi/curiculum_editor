@@ -19,7 +19,7 @@
                 <v-icon>mdi-logout</v-icon>
               </v-list-item-action>
               <v-list-item-subtitle>
-                <v-list-item-title>Log Out</v-list-item-title>
+                <v-list-item-title>Выйти с аккаунта</v-list-item-title>
               </v-list-item-subtitle>
             </v-list-item>
         </v-navigation-drawer>
@@ -53,17 +53,20 @@
             <v-row v-if="currentTab.name === 'Prerequisite'"> <!-- Add similar blocks for other models -->
               <PrerequisiteComponent></PrerequisiteComponent>
             </v-row>
+            <v-row v-if="currentTab.name === 'Semester'"> <!-- Add similar blocks for other models -->
+              <semester></semester>
+            </v-row>
           </v-container>
         </v-main>
         <v-dialog v-model="logoutDialog" max-width="400">
         <v-card>
-          <v-card-title class="headline">Confirm Log Out</v-card-title>
+          <v-card-title class="headline">Выйти с аккаунта</v-card-title>
           <v-card-text>
-            Are you sure you want to log out?
+            Вы точно хотите выйти?
           </v-card-text>
           <v-card-actions>
-            <v-btn color="primary" @click="confirmLogout">Yes</v-btn>
-            <v-btn color="grey" text @click="cancelLogout">Cancel</v-btn>
+            <v-btn color="primary" @click="confirmLogout">Да</v-btn>
+            <v-btn color="grey" text @click="cancelLogout">Отмена</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -79,6 +82,7 @@ import Departments from "@/components/Departments.vue";
 import ModuleComponent from "@/components/ModuleComponent.vue";
 import Cycles from "@/components/Cycles.vue";
 import PrerequisiteComponent from "@/components/PrerequisiteComponent.vue";
+import semester from "@/components/Semester.vue";
 import store from "@/store/index.js";
   export default {
     name: "DashboardView",
@@ -90,19 +94,20 @@ import store from "@/store/index.js";
     Cycles,
     Course,
       PrerequisiteComponent,
+      semester,
 },
     data() {
       return {
         items: [
-          { text: "ProfessionalComponent", name: "ProfessionalComponent", icon: "mdi-view-module" },
-          { text: "Components", name: "ComponentComponent", icon: "mdi-view-module" },
-          { text: "Modules", name: "Module", icon: "mdi-library" },
-          { text: "Cycles", name: "Cycle", icon: "mdi-refresh" },
-          { text: "Departments", name: "Department", icon: "mdi-bank" },
-          { text: "Courses", name: "Course", icon: "mdi-school" },
-          { text: "Prerequisite", name: "Prerequisite", icon: "mdi-library"},
-          { text: "Semester", name: "Semester", icon: "mdi-library" },
-          { text: "Curiculum", name: "Curiculum", icon: "mdi-library" },
+          { text: "Профессиональные Компоненты", name: "ProfessionalComponent", icon: "mdi-view-module" },
+          { text: "Компоненты", name: "ComponentComponent", icon: "mdi-view-module" },
+          { text: "Модули", name: "Module", icon: "mdi-library" },
+          { text: "Циклы", name: "Cycle", icon: "mdi-refresh" },
+          { text: "Кафедры", name: "Department", icon: "mdi-bank" },
+          { text: "Курсы, Дисципилины", name: "Course", icon: "mdi-school" },
+          { text: "Пререквезиты", name: "Prerequisite", icon: "mdi-library"},
+          { text: "Семестр", name: "Semester", icon: "mdi-library" },
+          { text: "Учебный план", name: "Curiculum", icon: "mdi-library" },
         ],
         currentTab: null,
         logoutDialog: false,

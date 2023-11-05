@@ -3,11 +3,11 @@
     <div id="header">
         <header>
             <div class="header-title-container">
-                <h1 class="header-title">Curriculum Management System</h1>
+                <h1 class="header-title">Создания учебного плана</h1>
             </div>
             <div class="header-buttons">
-                <router-link to="/login" class="header-button">Login</router-link>
-                <router-link to="/signup" class="header-button">Sign Up</router-link>
+                <router-link to="/login" class="header-button">Зайти</router-link>
+                <router-link to="/signup" class="header-button">Зарегистрироваться</router-link>
             </div>
         </header>
     </div>

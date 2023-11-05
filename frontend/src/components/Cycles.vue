@@ -7,11 +7,11 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Module ID</th>
-              <th>Code KZ</th>
-              <th>Code RU</th>
-              <th>Code EN</th>
-              <th>Actions</th>
+              <th>Модуль ID</th>
+              <th>Код имя KZ</th>
+              <th>Код имя RU</th>
+              <th>Код имя EN</th>
+              <th>Действия</th>
             </tr>
           </thead>
           <tbody>
@@ -36,10 +36,10 @@
                 <input v-else v-model="editedCycle.code_en" />
               </td>
               <td>
-                <button @click="editCycle(cycle)" v-if="!cycle.editing">Edit</button>
-                <button @click="saveEditedCycle(editedCycle, cycle)" v-if="cycle.editing">Submit</button>
-                <button @click="cancelEdit(cycle)" v-if="cycle.editing">Cancel</button>
-                <button @click="deleteCycle(cycle.id)" v-if="!cycle.editing">Delete</button>
+                <button @click="editCycle(cycle)" v-if="!cycle.editing">Изменить</button>
+                <button @click="saveEditedCycle(editedCycle, cycle)" v-if="cycle.editing">Сохранить</button>
+                <button @click="cancelEdit(cycle)" v-if="cycle.editing">Отмена</button>
+                <button @click="deleteCycle(cycle.id)" v-if="!cycle.editing">Удалить</button>
               </td>
             </tr>
             <tr>
@@ -49,7 +49,7 @@
               <td><input v-model="newCycle.code_ru" /></td>
               <td><input v-model="newCycle.code_en" /></td>
               <td>
-                <button @click="addNewCycle">Add</button>
+                <button @click="addNewCycle">Добавить</button>
               </td>
             </tr>
           </tbody>

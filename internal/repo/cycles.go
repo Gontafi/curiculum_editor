@@ -6,7 +6,7 @@ import (
 
 func (r *Repository) GetAllCycles(limit int, offset int) ([]models.Cycle, error) {
 	var cyclesFromDB []models.Cycle
-	err := r.db.Preload("Cycle").Limit(limit).Offset(offset).Find(&cyclesFromDB).Error
+	err := r.db.Preload("Module").Limit(limit).Offset(offset).Find(&cyclesFromDB).Error
 	if err != nil {
 		return nil, err
 	}

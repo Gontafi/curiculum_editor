@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <h2>Manage Course Prerequisites</h2>
+    <h2>Управление Пререквезитами</h2>
     <div class="table-container flex-row">
       <!-- Block 1: All Courses -->
       <div class="block">
-        <h3>All Courses</h3>
+        <h3>Все Курсы</h3>
         <table>
           <thead>
           <tr>
-            <th>Course</th>
-            <th>Actions</th>
+            <th>Курсы</th>
+            <th>Действия</th>
           </tr>
           </thead>
           <tbody>
@@ -17,7 +17,7 @@
           <tr v-for="(course, index) in courses" :key="index">
             <td>{{ course.name_kz + "\n" + course.name_ru + "\n" + course.name_en }}</td>
             <td>
-              <button @click="selectCourse(course)">Select</button>
+              <button @click="selectCourse(course)">Выбрать</button>
             </td>
           </tr>
           </tbody>
@@ -43,12 +43,12 @@
 
       <!-- Block 2: Available Prerequisite Courses -->
       <div class="block">
-        <h3>Available Prerequisite Courses</h3>
+        <h3>Доступные Пререквезиты Куров</h3>
         <table>
           <thead>
           <tr>
-            <th>Course</th>
-            <th>Actions</th>
+            <th>Курсы</th>
+            <th>Действия</th>
           </tr>
           </thead>
           <tbody>
@@ -56,7 +56,7 @@
           <tr v-for="(course, index) in availablePrerequisiteCourses" :key="index">
             <td>{{ course.name_kz + "\n" + course.name_ru + "\n" + course.name_en }}</td>
             <td>
-              <button @click="addPrerequisited(course)">Add as Prerequisite</button>
+              <button @click="addPrerequisited(course)">Добавить как пререквезит</button>
             </td>
           </tr>
           </tbody>
@@ -65,12 +65,12 @@
 
       <!-- Block 3: Selected Course Prerequisites -->
       <div class="block">
-        <h3>Selected Course Prerequisites</h3>
+        <h3>Пререквезиты выбранного курса</h3>
         <table>
           <thead>
           <tr>
-            <th>Course</th>
-            <th>Actions</th>
+            <th>Курсы</th>
+            <th>Действия</th>
           </tr>
           </thead>
           <tbody>

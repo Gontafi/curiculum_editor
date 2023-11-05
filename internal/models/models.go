@@ -128,7 +128,9 @@ type SemesterCourse struct {
 	Semester Semester `gorm:"foreignKey:semester_id" json:"semester"`
 }
 type Semester struct {
-	ID int `gorm:"primaryKey" json:"id"`
+	ID        int       `gorm:"primaryKey" json:"id"`
+	CreatedAt time.Time `gorm:"column:created_at;default:now()"`
+	UpdatedAt time.Time `gorm:"column:updated_at;default:now()"`
 }
 
 type TotalCourseSemester struct {

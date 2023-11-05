@@ -4,7 +4,7 @@ import HomeHeaderVue from "@/components/HomeHeader.vue";
 export default {
   name: "HomeView",
   components: {
-    HomeHeaderVue, // Register the component here
+    HomeHeaderVue, // Регистрируйте компонент здесь
   },
 };
 </script>
@@ -13,31 +13,28 @@ export default {
   <div id="home">
     <HomeHeaderVue></HomeHeaderVue>
     <!-- eslint-disable -->
-    <!-- Additional content for the home page -->
+    <!-- Дополнительное содержание для домашней страницы -->
     <div class="page-content">
-      <h2>Welcome to Our Curriculum Management System</h2>
+      <h2>Добро пожаловать в нашу систему управления учебным планом</h2>
       <p>
-        Our system allows you to easily manage and browse educational
-        modules and courses. Whether you're a student or an educator, you'll
-        find the tools you need to succeed.
+        Наша система позволяет вам легко управлять и просматривать учебные модули и курсы. Независимо от того, являетесь ли вы студентом или преподавателем, вы найдете инструменты, необходимые для успешного обучения.
       </p>
       <div>
-        <h3>Key Features:</h3>
+        <h3>Основные функции:</h3>
         <ul class="custom-list">
-          <li>Effortless curriculum planning and organization.</li>
-          <li>Browse and discover a wide range of educational modules.</li>
-          <li>Manage courses, track progress, and access resources.</li>
-          <li>Collaborate with fellow educators and students.</li>
-          <li>Streamline communication and stay informed about updates.</li>
+          <li>Легкое планирование и организация учебного плана.</li>
+          <li>Просмотр и открытие разнообразных учебных модулей.</li>
+          <li>Управление курсами, отслеживание прогресса и доступ к ресурсам.</li>
+          <li>Сотрудничество с коллегами-преподавателями и студентами.</li>
+          <li>Оптимизация коммуникации и получение информации об обновлениях.</li>
         </ul>
       </div>
-      <h3>Get Started:</h3>
+      <h3>Начните использовать:</h3>
       <p>
-        Ready to begin your educational journey? Sign up or log in to get started.
-        If you have any questions or need assistance, our support team is here to help.
+        Готовы начать свой учебный путь? Зарегистрируйтесь или войдите в систему, чтобы начать. Если у вас возникнут вопросы или потребуется помощь, наша служба поддержки всегда готова помочь.
       </p>
 
-      <!-- Add more content or sections as needed -->
+      <!-- Добавьте больше содержания или разделов по мере необходимости -->
     </div>
   </div>
 </template>
@@ -58,7 +55,7 @@ body {
 .page-content {
   margin: 10px;
   padding: 10px;
-  background-color: #e9e9e9; /* Light gray background color for content */
+  background-color: #e9e9e9; /* Светло-серый цвет фона для контента */
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -72,23 +69,23 @@ body {
   font-size: 16px;
 }
 
-/* Custom style for the list items */
+/* Пользовательский стиль для элементов списка */
 .custom-list {
-  list-style-type: none; /* Remove default list bullets */
-  padding-left: 0; /* Remove default left padding */
+  list-style-type: none; /* Уберите стандартные маркеры списка */
+  padding-left: 0; /* Уберите стандартный левый отступ */
 }
 
 .custom-list li {
-  margin-bottom: 8px; /* Add spacing between list items */
-  text-align: center; /* Center-align the text within each list item */
+  margin-bottom: 8px; /* Добавьте интервал между элементами списка */
+  text-align: center; /* Выровняйте текст в каждом элементе списка по центру */
 }
 
 .custom-list li::before {
-  content: "\2022"; /* Use a custom bullet character (in this case, a bullet point) */
-  color: #3c66aa; /* Set the color of the custom bullet */
-  font-weight: bold; /* Optional: Make the bullet bold */
-  position: relative; /* Position relative for custom bullet */
-  left: 0; /* Adjust the position of the custom bullet to align with the text */
-  margin-right: 5px; /* Add some spacing between the bullet and the text */
+  content: "\2022"; /* Используйте пользовательский символ маркера (в данном случае - точку) */
+  color: #3c66aa; /* Установите цвет пользовательского маркера */
+  font-weight: bold; /* Необязательно: сделайте маркер жирным */
+  position: relative; /* Положение относительно пользовательского маркера */
+  left: 0; /* Подгоните положение пользовательского маркера, чтобы выровнять его с текстом */
+  margin-right: 5px; /* Добавьте интервал между маркером и текстом */
 }
 </style>

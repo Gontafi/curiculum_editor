@@ -7,27 +7,27 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Code KZ</th>
-              <th>Code RU</th>
-              <th>Code EN</th>
-              <th>ECTS</th>
-              <th>Module</th>
-              <th>Department</th>
-              <th>Professional Component</th>
-              <th>Name KZ</th>
-              <th>Name RU</th>
-              <th>Name EN</th>
-              <th>Lang of Teach KZ</th>
-              <th>Lang of Teach RU</th>
-              <th>Lang of Teach EN</th>
-              <th>Control Form KZ</th>
-              <th>Control Form RU</th>
-              <th>Control Form EN</th>
-              <th>Lecture Hour</th>
-              <th>Seminar Hour</th>
-              <th>Lab Hour</th>
-              <th>SRO Hour</th>
-              <th>Actions</th>
+            <th>Код KZ</th>
+            <th>Код RU</th>
+            <th>Код EN</th>
+            <th>ECTS</th>
+            <th>Модуль</th>
+            <th>Департамент</th>
+            <th>Профессиональный компонент</th>
+            <th>Название KZ</th>
+            <th>Название RU</th>
+            <th>Название EN</th>
+            <th>Язык обучения KZ</th>
+            <th>Язык обучения RU</th>
+            <th>Язык обучения EN</th>
+            <th>Форма контроля KZ</th>
+            <th>Форма контроля RU</th>
+            <th>Форма контроля EN</th>
+            <th>Лекционные часы</th>
+            <th>Семинарские часы</th>
+            <th>Лабораторные часы</th>
+            <th>СРО часы</th>
+            <th>Действия</th>
             </tr>
           </thead>
           <tbody>
@@ -116,10 +116,10 @@
                 <input v-else v-model="editedCourse.sro_hour" />
               </td>
               <td>
-                <button @click="editCourse(course)" v-if="!course.editing">Edit</button>
-                <button @click="saveEditedCourse(editedCourse, course)" v-if="course.editing">Submit</button>
-                <button @click="cancelEdit(course)" v-if="course.editing">Cancel</button>
-                <button @click="deleteCourse(course.id)" v-if="!course.editing">Delete</button>
+                <button @click="editCourse(course)" v-if="!course.editing">Изменить</button>
+                <button @click="saveEditedCourse(editedCourse, course)" v-if="course.editing">Сохранить</button>
+                <button @click="cancelEdit(course)" v-if="course.editing">Отмена</button>
+                <button @click="deleteCourse(course.id)" v-if="!course.editing">Удалить</button>
               </td>
             </tr>
             <tr>
@@ -145,7 +145,7 @@
               <td><input v-model="newCourse.lab_hour" /></td>
               <td><input v-model="newCourse.sro_hour" /></td>
               <td>
-                <button @click="addNewCourse">Add</button>
+                <button @click="addNewCourse">Добавить</button>
               </td>
             </tr>
           </tbody>

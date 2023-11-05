@@ -8,14 +8,14 @@
           <tr>
             <th>ID</th>
             <th>ProfID</th>
-            <th>Code KZ</th>
-            <th>Code RU</th>
-            <th>Code EN</th>
-            <th>Description KZ</th>
-            <th>Description RU</th>
-            <th>Description EN</th>
-            <th>Order</th>
-            <th>Actions</th>
+            <th>Код KZ</th>
+            <th>Код RU</th>
+            <th>Код EN</th>
+            <th>Описание KZ</th>
+            <th>Описание RU</th>
+            <th>Описание EN</th>
+            <th>Порядок</th>
+            <th>Действия</th>
           </tr>
         </thead>
         <tbody>
@@ -56,10 +56,10 @@
               <input v-else v-model="editedComponent.order" />
             </td>
             <td>
-              <button @click="editComponent(component)" v-if="!component.editing">Edit</button>
-              <button @click="saveEditedComponent(editedComponent, component)" v-if="component.editing">Submit</button>
-              <button @click="cancelEdit(component)" v-if="component.editing">Cancel</button>
-              <button @click="deleteComponent(component.id)" v-if="!component.editing">Delete</button>
+              <button @click="editComponent(component)" v-if="!component.editing">Изменить</button>
+              <button @click="saveEditedComponent(editedComponent, component)" v-if="component.editing">Сохранить</button>
+              <button @click="cancelEdit(component)" v-if="component.editing">Отмена</button>
+              <button @click="deleteComponent(component.id)" v-if="!component.editing">Удалить</button>
             </td>
           </tr>
           <tr>
@@ -73,7 +73,7 @@
             <td><input v-model="newComponent.description_en" /></td>
             <td><input v-model="newComponent.order" /></td>
             <td>
-              <button @click="addNewComponent">Add</button>
+              <button @click="addNewComponent">Добавить</button>
             </td>
           </tr>
         </tbody>

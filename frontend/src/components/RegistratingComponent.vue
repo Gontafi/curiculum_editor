@@ -3,7 +3,7 @@
     <div>
       <div class="sign-up-back">
         <div class="sign-up-page">
-          <h2>SignUp</h2>
+          <h2>Регистрация</h2>
           <form @submit.prevent="this.$store.dispatch('authComponent/signUp')">
             <div class="form-group">
               <label for="username">Username:</label>

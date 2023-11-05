@@ -3,17 +3,17 @@
     <div>
       <div class="login-back">
         <div class="login-page">
-          <h2>Login</h2>
+          <h2>Авторизация</h2>
           <form @submit.prevent="this.$store.dispatch('authComponent/login')">
             <div class="form-group">
               <label for="username">Username:</label>
               <input type="text" id="username" v-model="credentials.username" required>
             </div>
             <div class="form-group">
-              <label for="password">Password:</label>
+              <label for="password">Пароль:</label>
               <input type="password" id="password" v-model="credentials.password" required>
             </div>
-            <button type="submit" @click="onCl()">Login</button>
+            <button type="submit" @click="onCl()">Зайти</button>
           </form>
         </div>
       </div>

@@ -8,11 +8,11 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Code</th>
-              <th>Name KZ</th>
-              <th>Name RU</th>
-              <th>Name EN</th>
-              <th>Actions</th>
+              <th>Код</th>
+              <th>Название KZ</th>
+              <th>Название RU</th>
+              <th>Название EN</th>
+              <th>Действия</th>
             </tr>
           </thead>
           <tbody>
@@ -37,10 +37,10 @@
                 <input v-else v-model="editedModule.name_en" />
               </td>
               <td>
-                <button @click="editModule(module)" v-if="!module.editing">Edit</button>
-                <button @click="saveEditedModule(editedModule, module)" v-if="module.editing">Submit</button>
-                <button @click="cancelEdit(module)" v-if="module.editing">Cancel</button>
-                <button @click="deleteModule(module.id)" v-if="!module.editing">Delete</button>
+                <button @click="editModule(module)" v-if="!module.editing">Изменить</button>
+                <button @click="saveEditedModule(editedModule, module)" v-if="module.editing">Сохранить</button>
+                <button @click="cancelEdit(module)" v-if="module.editing">Отмена</button>
+                <button @click="deleteModule(module.id)" v-if="!module.editing">Удалить</button>
               </td>
             </tr>
             <!-- Add new module row -->
@@ -51,7 +51,7 @@
               <td><input v-model="newModule.name_ru" /></td>
               <td><input v-model="newModule.name_en" /></td>
               <td>
-                <button @click="addNewModule">Add</button>
+                <button @click="addNewModule">Добавить</button>
               </td>
             </tr>
           </tbody>

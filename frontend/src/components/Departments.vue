@@ -7,10 +7,10 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Description KZ</th>
-              <th>Description RU</th>
-              <th>Description EN</th>
-              <th>Actions</th>
+              <th>Описание KZ</th>
+              <th>Описание RU</th>
+              <th>Описание EN</th>
+              <th>Действия</th>
             </tr>
           </thead>
           <tbody>
@@ -31,10 +31,10 @@
                 <input v-else v-model="editedDepartment.description_en" />
               </td>
               <td>
-                <button @click="editDepartment(department)" v-if="!department.editing">Edit</button>
-                <button @click="saveEditedDepartment(editedDepartment, department)" v-if="department.editing">Submit</button>
-                <button @click="cancelEdit(department)" v-if="department.editing">Cancel</button>
-                <button @click="deleteDepartment(department.id)" v-if="!department.editing">Delete</button>
+                <button @click="editDepartment(department)" v-if="!department.editing">Изменить</button>
+                <button @click="saveEditedDepartment(editedDepartment, department)" v-if="department.editing">Сохранить</button>
+                <button @click="cancelEdit(department)" v-if="department.editing">Отмена</button>
+                <button @click="deleteDepartment(department.id)" v-if="!department.editing">Удалить</button>
               </td>
             </tr>
             <tr>
@@ -43,7 +43,7 @@
               <td><input v-model="newDepartment.description_ru" /></td>
               <td><input v-model="newDepartment.description_en" /></td>
               <td>
-                <button @click="addNewDepartment">Add</button>
+                <button @click="addNewDepartment">Добавить</button>
               </td>
             </tr>
           </tbody>
