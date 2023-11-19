@@ -56,6 +56,9 @@
             <v-row v-if="currentTab.name === 'Semester'"> <!-- Add similar blocks for other models -->
               <semester></semester>
             </v-row>
+            <v-row v-if="currentTab.name === 'Curiculum'"> <!-- Add similar blocks for other models -->
+              <CuriculumComponent></CuriculumComponent>
+            </v-row>
           </v-container>
         </v-main>
         <v-dialog v-model="logoutDialog" max-width="400">
@@ -84,6 +87,7 @@ import Cycles from "@/components/Cycles.vue";
 import PrerequisiteComponent from "@/components/PrerequisiteComponent.vue";
 import semester from "@/components/Semester.vue";
 import store from "@/store/index.js";
+import CuriculumComponent from "@/components/Curiculum.vue"
   export default {
     name: "DashboardView",
     components: {
@@ -95,6 +99,7 @@ import store from "@/store/index.js";
     Course,
       PrerequisiteComponent,
       semester,
+      CuriculumComponent,
 },
     data() {
       return {
